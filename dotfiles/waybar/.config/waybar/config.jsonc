@@ -1,0 +1,120 @@
+{
+    "layer": "top", // Waybar at top layer
+    "position": "top", // Waybar position (top|bottom|left|right)
+    "height": 48, // Slightly taller for cyberpunk aesthetic
+    "spacing": 2, // Tighter gaps between modules
+    "margin-top": 0,
+    "margin-left": 0,
+    "margin-right": 0,
+    "border-radius": 5,
+
+    // Choose order of modules - cyberpunk optimized layout
+    "modules-left": [
+        "hyprland/workspaces"
+    ],
+    "modules-center": [
+    ],
+    "modules-right": [
+        "pulseaudio",
+        "custom/sep1",
+        "network",
+        "custom/sep2",
+        "cpu",
+        "custom/sep3",
+        "memory",
+        "custom/sep4",
+        "battery",
+        "custom/sep5",
+        "backlight",
+        "custom/sep6",
+        "clock",
+        "tray"
+    ],
+
+    "hyprland/workspaces": {
+        "disable-scroll": false,
+        "all-outputs": true
+    },
+
+
+    "tray": {
+        "icon-size": 16,
+        "spacing": 8
+    },
+
+    "clock": {
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "format": "{:%I:%M %p}",
+        "format-alt": "{:%Y-%m-%d}",
+        "interval": 60
+    },
+
+    "cpu": {
+        "format": "CPU {usage:02}% ",
+        "tooltip": true,
+        "tooltip-format": "CPU Usage: {usage}%\nCores: {avg_frequency} GHz",
+        "interval": 2
+    },
+
+    "memory": {
+        "format": "MEM {}% ",
+        "tooltip": true,
+        "tooltip-format": "Memory: {used:.1f}GB/{total:.1f}GB\nSwap: {swapUsed:.1f}GB/{swapTotal:.1f}GB",
+        "interval": 5
+    },
+
+    "battery": {
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{capacity}% {icon}",
+        "format-charging": "{capacity}% ⚡",
+        "format-plugged": "{capacity}% 🔌",
+        "format-icons": ["🪫", "🔋", "🔋", "🔋", "🔋"]
+    },
+
+    "network": {
+        "format-wifi": "{essid} 📶",
+        "format-ethernet": "🌐 {ipaddr}",
+        "format-linked": "🔗",
+        "format-disconnected": "⚠️",
+        "tooltip": true,
+        "tooltip-format": "{ifname} via {gwaddr}",
+        "tooltip-format-wifi": "{essid} ({signalStrength}%)\nFrequency: {frequency}MHz\nStrength: {signaldBm}dBm\nIP: {ipaddr}",
+        "tooltip-format-ethernet": "{ifname}\nIP: {ipaddr}\nGateway: {gwaddr}",
+        "tooltip-format-disconnected": "Disconnected",
+        "on-click": "nm-connection-editor",
+        "interval": 10
+    },
+
+    "custom/sep1": {
+        "format": "│",
+        "tooltip": false
+    },
+    "custom/sep2": {
+        "format": "│",
+        "tooltip": false
+    },
+    "custom/sep3": {
+        "format": "│",
+        "tooltip": false
+    },
+    "custom/sep4": {
+        "format": "│",
+        "tooltip": false
+    },
+    "custom/sep5": {
+        "format": "│",
+        "tooltip": false
+    },
+    "backlight": {
+        "device": "apple-panel-bl",
+        "format": "{percent}% ☀",
+        "interval": 2
+    },
+    "custom/sep6": {
+        "format": "│",
+        "tooltip": false
+    }
+}
