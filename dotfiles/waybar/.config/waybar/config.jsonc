@@ -19,6 +19,8 @@
         "custom/sep1",
         "network",
         "custom/sep2",
+        // "bluetooth",
+        // "custom/sep7",
         "cpu",
         "custom/sep3",
         "memory",
@@ -116,5 +118,20 @@
     "custom/sep6": {
         "format": "│",
         "tooltip": false
+    },
+    "custom/sep7": {
+        "format": "│",
+        "tooltip": false
+    },
+
+    "bluetooth": {
+        "format": "{status} ",
+        "format-connected": "{num_connections} ",
+        "format-disabled": "",
+        "tooltip": true,
+        "tooltip-format": "{controller_alias}\t{controller_address}",
+        "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
+        "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+        "on-click": "blueman-manager"
     }
 }
