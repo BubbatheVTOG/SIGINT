@@ -807,21 +807,21 @@ function beginning-or-end-of-somewhere () {
 ## use Ctrl-left-arrow and Ctrl-right-arrow for jumping to word-beginnings on
 ## the command line.
 # URxvt sequences:
-bind2maps emacs viins vicmd -- -s '\eOc' forward-word
-bind2maps emacs viins vicmd -- -s '\eOd' backward-word
-# These are for xterm:
-bind2maps emacs viins vicmd -- -s '\e[1;5C' forward-word
-bind2maps emacs viins vicmd -- -s '\e[1;5D' backward-word
-## the same for alt-left-arrow and alt-right-arrow
-# URxvt again:
-bind2maps emacs viins vicmd -- -s '\e\e[C' forward-word
-bind2maps emacs viins vicmd -- -s '\e\e[D' backward-word
-# Xterm again:
-bind2maps emacs viins vicmd -- -s '^[[1;3C' forward-word
-bind2maps emacs viins vicmd -- -s '^[[1;3D' backward-word
-# Also try ESC Left/Right:
-bind2maps emacs viins vicmd -- -s '\e'${key[Right]} forward-word
-bind2maps emacs viins vicmd -- -s '\e'${key[Left]}  backward-word
+# bind2maps emacs viins vicmd -- -s '\eOc' forward-word
+# bind2maps emacs viins vicmd -- -s '\eOd' backward-word
+# # These are for xterm:
+# bind2maps emacs viins vicmd -- -s '\e[1;5C' forward-word
+# bind2maps emacs viins vicmd -- -s '\e[1;5D' backward-word
+# ## the same for alt-left-arrow and alt-right-arrow
+# # URxvt again:
+# bind2maps emacs viins vicmd -- -s '\e\e[C' forward-word
+# bind2maps emacs viins vicmd -- -s '\e\e[D' backward-word
+# # Xterm again:
+# bind2maps emacs viins vicmd -- -s '^[[1;3C' forward-word
+# bind2maps emacs viins vicmd -- -s '^[[1;3D' backward-word
+# # Also try ESC Left/Right:
+# bind2maps emacs viins vicmd -- -s '\e'${key[Right]} forward-word
+# bind2maps emacs viins vicmd -- -s '\e'${key[Left]}  backward-word
 
 # autoloading
 
@@ -2966,28 +2966,23 @@ unfunction grml_status_feature
 # opencode
 export PATH=/home/bubba/.opencode/bin:$PATH
 
-# --- Color Definitions (Using Hex via Kitty's TrueColor support) ---
-# Note: In Zsh, we can use %F{#hex} for terminals that support TrueColor
-MINT="%F{#00ff99}"
-CYAN="%F{#33ccff}"
-BLACK="%F{#000000}"
-BG_CYAN="%K{#33ccff}"
-RESET="%f%k"
+setopt PROMPT_SUBST
 
-# --- Git Integration ---
+MINT='%F{#00ff99}'
+CYAN='%F{#33ccff}'
+BLACK='%F{#000000}'
+BG_CYAN='%K{#33ccff}'
+RESET='%f%k'
+
 autoload -Uz vcs_info
-zstyle ':vcs_info:git:*' formats " %F{#00ff99} %b%f"
+zstyle ':vcs_info:git:*' formats " ${MINT} %b%f"
 precmd() { vcs_info }
 
-# --- The Prompt (Neon-Pill with Devicons) ---
-# [  directory ] ( branch)
-# ❯
-PS1='
-${BG_CYAN}${BLACK}  %~ ${RESET}${vcs_info_msg_0_}
-${MINT}❯${RESET} '
+PS1="${BG_CYAN}${BLACK}  %~ ${RESET}\${vcs_info_msg_0_}
+${MINT}❯${RESET} "
 
-# Right Prompt: Green check on success, Cyan cross on fail
-RPS1='%(?.%F{#00ff99}.%F{#33ccff})%f'
+RPS1='%(?.%F{#00ff99}.%F{#33ccff})%f'
+
 
 # --- LS_COLORS ---
 export LS_COLORS="di=38;2;51;204;255:ex=38;2;0;255;153:"
@@ -3013,9 +3008,10 @@ if [[ -o interactive ]]; then
     fastfetch
 fi
 
+alias llama_start='./home/bubba/git/llama-cpp/build/bin/llama-server --model ~/models/deepseek-r1-8b-q4_k_m.gguf --host 127.0.0.1 --port 8080 --gpu-layers 35'
+
 ## END OF FILE #################################################################
 # vim:filetype=zsh foldmethod=marker autoindent expandtab shiftwidth=4
 # Local variables:
 # mode: sh
 # End:
-alias llama_start='./home/bubba/git/llama-cpp/build/bin/llama-server --model ~/models/deepseek-r1-8b-q4_k_m.gguf --host 127.0.0.1 --port 8080 --gpu-layers 35'
