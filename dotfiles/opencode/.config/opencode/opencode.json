@@ -11,7 +11,7 @@
         "deepseek-r1-8b-q4_k_m.gguf": {
           "name": "DeepSeek R1 8B (local)",
           "limit": {
-            "context": 128000,
+            "context": 32768,
             "output": 32768
           }
         }

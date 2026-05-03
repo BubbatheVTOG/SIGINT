@@ -9,6 +9,10 @@ fi
 if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]; then
     PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 fi
+
+if ! [[ "$PATH" =~ "$HOME/.cargo/bin:" ]]; then
+    PATH="$HOME/.cargo/bin:$PATH"
+fi
 export PATH
 
 # Uncomment the following line if you don't like systemctl's auto-paging feature:
@@ -44,5 +48,17 @@ export PS1="${CYAN}\w ${MINT}❯ ${RESET}"
 
 alias llama_start='./home/bubba/git/llama-cpp/build/bin/llama-server --model ~/models/deepseek-r1-8b-q4_k_m.gguf --host 127.0.0.1 --port 8080 --gpu-layers 35'
 
+# Fix SSH issues (including delete key) using kitty's ssh kitten
+alias ssh='kitty +kitten ssh'
+
 fastfetch
 eval "$(zoxide init bash)"
+
+if [ -t 1 ]; then
+  # Ensure we switch to zsh if available
+  if [ -x /usr/bin/zsh ]; then
+      export SHELL=/usr/bin/zsh
+      exec /usr/bin/zsh
+  fi
+fi
+
