@@ -3643,3 +3643,7 @@ export PATH=/home/bubba/.opencode/bin:$PATH
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+# Secrets (API keys, tokens) - kept outside the repo
+[ -f ~/.config/secrets ] && source ~/.config/secrets
+
