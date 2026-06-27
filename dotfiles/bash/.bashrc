@@ -46,3 +46,4 @@ alias llama_start='./home/bubba/git/llama-cpp/build/bin/llama-server --model ~/m
 
 fastfetch
 eval "$(zoxide init bash)"
+. "$HOME/.cargo/env"

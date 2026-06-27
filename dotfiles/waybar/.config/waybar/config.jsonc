@@ -24,11 +24,13 @@
         "cpu",
         "custom/sep3",
         "memory",
-        "custom/sep4",
-        "battery",
-        "custom/sep5",
-        "backlight",
+        // "custom/sep4",
+        // "battery",
+        // "custom/sep5",
+        // "backlight",
         "custom/sep6",
+        "custom/gpu-status",
+        "custom/sep7",
         "clock",
         "tray"
     ],
@@ -133,5 +135,14 @@
         "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
         "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
         "on-click": "blueman-manager"
+    },
+
+    "custom/gpu-status": {
+        "exec": "/home/bubba/.local/bin/gpu-status --json",
+        "interval": 10,
+        "return-type": "json",
+        "format": "{}",
+        "tooltip": true,
+        "on-click": "sudo toggle-gpu status"
     }
 }

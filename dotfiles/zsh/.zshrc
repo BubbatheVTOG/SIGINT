@@ -3015,3 +3015,6 @@ alias llama_start='./home/bubba/git/llama-cpp/build/bin/llama-server --model ~/m
 # Local variables:
 # mode: sh
 # End:
+
+# Workaround for Bun bus crash on Ryzen 5800X3D
+export OPENCODE_BIN_PATH=/usr/lib/node_modules/opencode-ai/node_modules/opencode-linux-x64-baseline/bin/opencode

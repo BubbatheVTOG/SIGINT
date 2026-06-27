@@ -18,7 +18,7 @@
 
 /* Global Reset */
 * {
-    font-family: 'JetBrains Mono', 'Noto Sans Mono', 'Font Awesome 6 Free', 'Font Awesome 6 Brands', monospace;
+    font-family: 'JetBrains Mono', 'Noto Sans Mono', 'Font Awesome 7 Free', 'Font Awesome 7 Brands', monospace;
     font-size: 13px;
     font-weight: 500;
 }
@@ -115,6 +115,7 @@ button:hover {
 }
 
 /* Vertical Separators */
+#custom-gpu-status,
 #custom-sep1, 
 #custom-sep2, 
 #custom-sep3, 
@@ -180,6 +181,24 @@ button:hover {
 
 #temperature.critical { color: @red; }
 #custom-weather { color: @blue; }
+
+#custom-gpu-status {
+    padding: 4px 12px;
+    margin: 0;
+    border-radius: 4px;
+    background: transparent;
+}
+#custom-gpu-status.vm {
+    color: @pink;
+    font-weight: bold;
+}
+#custom-gpu-status.host {
+    color: @green;
+    font-weight: bold;
+}
+#custom-gpu-status.unknown {
+    color: @orange;
+}
 
 #tray { color: @teal; }
 #tray > .passive { opacity: 0.5; }
