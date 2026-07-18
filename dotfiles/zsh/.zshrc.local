@@ -1,0 +1,22 @@
+# Personal zsh additions — sourced by grml's zrclocal (~/.zshrc -> grml zshrc).
+# Keep this minimal; grml owns prompt, history, aliases, completion.
+# Starship is available but intentionally disabled in favor of the grml prompt.
+# To re-enable starship, add: eval "$($HOME/.local/bin/starship init zsh)"
+
+# History — grml's guard (HISTSIZE==30 || empty) doesn't fire on zsh 5.9 (default 1000),
+# so set explicit values here to keep persistent history.
+export HISTSIZE=50000
+export SAVEHIST=50000
+
+# opencode
+export PATH=/home/bubba/.opencode/bin:$PATH
+
+# bun completions
+[ -s "/home/bubba/.bun/_bun" ] && source "/home/bubba/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# Secrets (API keys, tokens) - kept outside the repo
+[ -f ~/.config/secrets ] && source ~/.config/secrets
