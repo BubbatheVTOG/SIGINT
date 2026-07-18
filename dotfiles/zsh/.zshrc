@@ -3628,22 +3628,3 @@ unfunction grml_status_feature
 # Local variables:
 # mode: sh
 # End:
-
-# Force Starship prompt
-if command -v $HOME/.local/bin/starship >/dev/null; then
-    eval "$($HOME/.local/bin/starship init zsh)"
-fi
-
-# opencode
-export PATH=/home/bubba/.opencode/bin:$PATH
-
-# bun completions
-[ -s "/home/bubba/.bun/_bun" ] && source "/home/bubba/.bun/_bun"
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
-
-# Secrets (API keys, tokens) - kept outside the repo
-[ -f ~/.config/secrets ] && source ~/.config/secrets
-
