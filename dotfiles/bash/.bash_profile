@@ -7,3 +7,5 @@ fi
 
 # User specific environment and startup programs
 [[ -f ~/.bashrc ]] && . ~/.bashrc
+
+. "$HOME/.local/bin/env"

@@ -62,3 +62,5 @@ if [ -t 1 ]; then
   fi
 fi
 
+
+. "$HOME/.local/bin/env"

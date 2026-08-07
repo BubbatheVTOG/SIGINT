@@ -1,2 +1,6 @@
 # Secrets
 .config/secrets
+
+# Runtime caches and backups
+.zcompdump*
+*.bak

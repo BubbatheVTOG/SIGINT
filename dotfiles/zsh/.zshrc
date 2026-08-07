@@ -3628,3 +3628,12 @@ unfunction grml_status_feature
 # Local variables:
 # mode: sh
 # End:
+
+. "$HOME/.local/bin/env"
+
+# bun completions
+[ -s "/home/bubba/.bun/_bun" ] && source "/home/bubba/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
