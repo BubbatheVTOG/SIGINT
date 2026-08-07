@@ -20,3 +20,14 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 
 # Secrets (API keys, tokens) - kept outside the repo
 [ -f ~/.config/secrets ] && source ~/.config/secrets
+
+# Neat fetch on every terminal window, tinted to match the active theme
+# (teal / red accents from ~/.cache/current_theme, kept in sync by toggle-theme.sh)
+if [[ "$TERM" != dumb ]] && command -v fastfetch >/dev/null 2>&1; then
+    case "$(cat ~/.cache/current_theme 2>/dev/null)" in
+        red)  fastfetch --color-keys '#ef596f' --color-title '#ef596f' \
+                        --color-separator '#c24038' --logo-color-1 '#ef596f' ;;
+        *)    fastfetch --color-keys '#00ffff' --color-title '#00ffff' \
+                        --color-separator '#00cccc' --logo-color-1 '#00ffff' ;;
+    esac
+fi
