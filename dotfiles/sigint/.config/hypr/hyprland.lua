@@ -200,6 +200,7 @@ hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen())
 hl.bind(mainMod .. " + SHIFT + L", hl.dsp.exec_cmd("hyprlock"))
 hl.bind(mainMod .. " + O", hl.dsp.exec_cmd(terminal .. " opencode"))
+hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd("/home/bubba/.local/bin/toggle-theme.sh"))
 
 -- Screenshot keybindings
 hl.bind("CTRL + SHIFT + 4", hl.dsp.exec_cmd('grim -g "$(slurp)" - | wl-copy && notify-send "Screenshot copied to clipboard"'))
