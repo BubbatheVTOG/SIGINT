@@ -1,9 +1,9 @@
 /* Cyberpunk Waybar Theme - Black & Teal Edition */
 
 /* Color Definitions */
-@define-color teal #00ffff;
-@define-color teal-dim #00cccc;
-@define-color teal-light #00ffd5;
+@define-color teal #ef596f;
+@define-color teal-dim #c24038;
+@define-color teal-light #d8985f;
 @define-color green #00ff9f;
 @define-color pink #ff33cc;
 @define-color red #ff0080;
