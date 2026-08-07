@@ -22,40 +22,40 @@ if [ "$CURRENT_THEME" = "teal" ]; then
 
     # 1. Hyprland Borders
     if [ -f "$HYPR_LUA" ]; then
-        sed -i 's/rgba(33ccffee)/rgba(ef596fee)/g' "$HYPR_LUA"
-        sed -i 's/rgba(00ff99ee)/rgba(d8985fee)/g' "$HYPR_LUA"
-        sed -i 's/rgba(00FFFFEE)/rgba(ef596fee)/g' "$HYPR_LUA"
+        sed --follow-symlinks -i 's/rgba(33ccffee)/rgba(ef596fee)/g' "$HYPR_LUA"
+        sed --follow-symlinks -i 's/rgba(00ff99ee)/rgba(d8985fee)/g' "$HYPR_LUA"
+        sed --follow-symlinks -i 's/rgba(00FFFFEE)/rgba(ef596fee)/g' "$HYPR_LUA"
         hyprctl reload >/dev/null
     fi
 
     # 2. Waybar CSS Colors
     if [ -f "$WAYBAR_CSS" ]; then
-        sed -i 's/@define-color teal #00ffff;/@define-color teal #ef596f;/g' "$WAYBAR_CSS"
-        sed -i 's/@define-color teal-dim #00cccc;/@define-color teal-dim #c24038;/g' "$WAYBAR_CSS"
-        sed -i 's/@define-color teal-light #00ffd5;/@define-color teal-light #d8985f;/g' "$WAYBAR_CSS"
+        sed --follow-symlinks -i 's/@define-color teal #00ffff;/@define-color teal #ef596f;/g' "$WAYBAR_CSS"
+        sed --follow-symlinks -i 's/@define-color teal-dim #00cccc;/@define-color teal-dim #c24038;/g' "$WAYBAR_CSS"
+        sed --follow-symlinks -i 's/@define-color teal-light #00ffd5;/@define-color teal-light #d8985f;/g' "$WAYBAR_CSS"
         pkill -SIGUSR2 waybar
     fi
 
     # 3. Kitty Colors
     if [ -f "$KITTY_CONF" ]; then
-        sed -i 's/#33ccff/#ef596f/g' "$KITTY_CONF"
-        sed -i 's/#00ff99/#d8985f/g' "$KITTY_CONF"
+        sed --follow-symlinks -i 's/#33ccff/#ef596f/g' "$KITTY_CONF"
+        sed --follow-symlinks -i 's/#00ff99/#d8985f/g' "$KITTY_CONF"
         kill -SIGUSR1 $(pgrep kitty) 2>/dev/null
     fi
 
     # 4. Rofi Theme
     if [ -f "$ROFI_RASI" ]; then
-        sed -i 's/#00ffff/#ef596f/g' "$ROFI_RASI"
+        sed --follow-symlinks -i 's/#00ffff/#ef596f/g' "$ROFI_RASI"
     fi
 
     # 5. OpenCode Theme
     if [ -f "$OPENCODE_JSON" ]; then
-        sed -i 's/"theme": "hyper-term-teal"/"theme": "hyper-term"/g' "$OPENCODE_JSON"
+        sed --follow-symlinks -i 's/"theme": "hyper-term-teal"/"theme": "hyper-term"/g' "$OPENCODE_JSON"
     fi
 
     # 6. Hyprpaper Wallpaper
     if [ -f "$HYPRPAPER_CONF" ]; then
-        sed -i 's|wallpaper = , /home/bubba/.config/hypr/wallpapers/teal.jpg|wallpaper = , /home/bubba/.config/hypr/wallpapers/red.jpg|g' "$HYPRPAPER_CONF"
+        sed --follow-symlinks -i 's|/home/bubba/.config/hypr/wallpapers/teal.jpg|/home/bubba/.config/hypr/wallpapers/red.jpg|g' "$HYPRPAPER_CONF"
         pkill hyprpaper
         hyprpaper >/dev/null 2>&1 &
     fi
@@ -67,40 +67,40 @@ else
 
     # 1. Hyprland Borders
     if [ -f "$HYPR_LUA" ]; then
-        sed -i 's/rgba(ef596fee)/rgba(33ccffee)/g' "$HYPR_LUA"
-        sed -i 's/rgba(d8985fee)/rgba(00ff99ee)/g' "$HYPR_LUA"
-        sed -i 's/rgba(ef596fee)/rgba(33ccffee)/g' "$HYPR_LUA"
+        sed --follow-symlinks -i 's/rgba(ef596fee)/rgba(33ccffee)/g' "$HYPR_LUA"
+        sed --follow-symlinks -i 's/rgba(d8985fee)/rgba(00ff99ee)/g' "$HYPR_LUA"
+        sed --follow-symlinks -i 's/rgba(ef596fee)/rgba(33ccffee)/g' "$HYPR_LUA"
         hyprctl reload >/dev/null
     fi
 
     # 2. Waybar CSS Colors
     if [ -f "$WAYBAR_CSS" ]; then
-        sed -i 's/@define-color teal #ef596f;/@define-color teal #00ffff;/g' "$WAYBAR_CSS"
-        sed -i 's/@define-color teal-dim #c24038;/@define-color teal-dim #00cccc;/g' "$WAYBAR_CSS"
-        sed -i 's/@define-color teal-light #d8985f;/@define-color teal-light #00ffd5;/g' "$WAYBAR_CSS"
+        sed --follow-symlinks -i 's/@define-color teal #ef596f;/@define-color teal #00ffff;/g' "$WAYBAR_CSS"
+        sed --follow-symlinks -i 's/@define-color teal-dim #c24038;/@define-color teal-dim #00cccc;/g' "$WAYBAR_CSS"
+        sed --follow-symlinks -i 's/@define-color teal-light #d8985f;/@define-color teal-light #00ffd5;/g' "$WAYBAR_CSS"
         pkill -SIGUSR2 waybar
     fi
 
     # 3. Kitty Colors
     if [ -f "$KITTY_CONF" ]; then
-        sed -i 's/#ef596f/#33ccff/g' "$KITTY_CONF"
-        sed -i 's/#d8985f/#00ff99/g' "$KITTY_CONF"
+        sed --follow-symlinks -i 's/#ef596f/#33ccff/g' "$KITTY_CONF"
+        sed --follow-symlinks -i 's/#d8985f/#00ff99/g' "$KITTY_CONF"
         kill -SIGUSR1 $(pgrep kitty) 2>/dev/null
     fi
 
     # 4. Rofi Theme
     if [ -f "$ROFI_RASI" ]; then
-        sed -i 's/#ef596f/#00ffff/g' "$ROFI_RASI"
+        sed --follow-symlinks -i 's/#ef596f/#00ffff/g' "$ROFI_RASI"
     fi
 
     # 5. OpenCode Theme
     if [ -f "$OPENCODE_JSON" ]; then
-        sed -i 's/"theme": "hyper-term"/"theme": "hyper-term-teal"/g' "$OPENCODE_JSON"
+        sed --follow-symlinks -i 's/"theme": "hyper-term"/"theme": "hyper-term-teal"/g' "$OPENCODE_JSON"
     fi
 
     # 6. Hyprpaper Wallpaper
     if [ -f "$HYPRPAPER_CONF" ]; then
-        sed -i 's|wallpaper = , /home/bubba/.config/hypr/wallpapers/red.jpg|wallpaper = , /home/bubba/.config/hypr/wallpapers/teal.jpg|g' "$HYPRPAPER_CONF"
+        sed --follow-symlinks -i 's|/home/bubba/.config/hypr/wallpapers/red.jpg|/home/bubba/.config/hypr/wallpapers/teal.jpg|g' "$HYPRPAPER_CONF"
         pkill hyprpaper
         hyprpaper >/dev/null 2>&1 &
     fi
