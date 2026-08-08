@@ -8,11 +8,16 @@ GNU stow-managed dotfiles for two Hyprland hosts: `sigint` (Asahi/Fedora ARM lap
 dotfiles/
 ├── common/    # Shared configs (stowed on both hosts). Only host-safe content:
 │              #   identical files, or existence-guarded logic (see below).
-├── sigint/    # Laptop-specific (Asahi, lid, battery, eDP-1)
-├── matt/      # Desktop-specific (3 monitors DP-4/5/6, GPU passthrough, no laptop keys)
-└── system/    # System-wide configs (/etc, e.g. greetd). Shared by both hosts.
-│              #   Stowed to / with sudo, NOT to $HOME.
+├── sigint/         # Laptop-specific (Asahi, lid, battery, eDP-1)
+├── matt/           # Desktop-specific (3 monitors DP-4/5/6, GPU passthrough, no laptop keys)
+├── system-sigint/  # sigint system-wide configs (/etc). Stowed to / with sudo.
+└── system-matt/    # matt system-wide configs (/etc). Stowed to / with sudo.
 ```
+
+> **Why two system packages?** greetd differs by OS: Fedora Asahi runs the
+> greeter as user `greetd` and launches Hyprland via the `start-hyprland`
+> wrapper (Asahi GPU setup); Arch uses user `greeter` and the bare `Hyprland`
+> binary. A single shared `system/` package would break one host.
 
 ### The common/ rule
 
@@ -33,16 +38,13 @@ host package (`matt/` or `sigint/`), never in `common/`. Example:
 On **sigint**:
 ```bash
 stow -R -t ~ common sigint
+sudo stow -R -t / system-sigint
 ```
 
 On **matt**:
 ```bash
 stow -R -t ~ common matt
-```
-
-System-wide configs (greetd), on both hosts:
-```bash
-sudo stow -R -t / system
+sudo stow -R -t / system-matt
 ```
 
 Requires packages: `greetd greetd-tuigreet` (then `systemctl enable greetd`).
