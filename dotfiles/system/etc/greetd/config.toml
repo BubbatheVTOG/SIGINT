@@ -1,0 +1,15 @@
+# greetd configuration — managed via SIGINT dotfiles (system package)
+# Install: sudo stow -R -t / system   (from the repo's dotfiles/ dir)
+# Docs:  man 5 greetd | https://man.sr.ht/~kennylevinsen/greetd/
+
+[terminal]
+# The VT to run the greeter on.
+vt = 1
+
+[default_session]
+# tuigreet greeter, accented to match the teal desktop theme.
+#   --time      show a clock on the greeter
+#   --remember  remember the last logged-in username
+#   --cmd       session command started after successful login
+command = "tuigreet --time --remember --theme 'border=cyan;prompt=cyan;input=cyan;action=cyan;button=cyan' --cmd Hyprland"
+user = "greeter"

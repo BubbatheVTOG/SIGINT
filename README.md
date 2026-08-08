@@ -9,7 +9,9 @@ dotfiles/
 ├── common/    # Shared configs (stowed on both hosts). Only host-safe content:
 │              #   identical files, or existence-guarded logic (see below).
 ├── sigint/    # Laptop-specific (Asahi, lid, battery, eDP-1)
-└── matt/      # Desktop-specific (3 monitors DP-4/5/6, GPU passthrough, no laptop keys)
+├── matt/      # Desktop-specific (3 monitors DP-4/5/6, GPU passthrough, no laptop keys)
+└── system/    # System-wide configs (/etc, e.g. greetd). Shared by both hosts.
+│              #   Stowed to / with sudo, NOT to $HOME.
 ```
 
 ### The common/ rule
@@ -37,6 +39,13 @@ On **matt**:
 ```bash
 stow -R -t ~ common matt
 ```
+
+System-wide configs (greetd), on both hosts:
+```bash
+sudo stow -R -t / system
+```
+
+Requires packages: `greetd greetd-tuigreet` (then `systemctl enable greetd`).
 
 ## Theme Toggle
 
