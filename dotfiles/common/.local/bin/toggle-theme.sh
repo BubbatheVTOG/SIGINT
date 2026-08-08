@@ -18,6 +18,7 @@ ROFI_RASI="$HOME/.config/rofi/themes/black-neon.rasi"
 TMUX_CONF="$HOME/.tmux.conf"
 HYPR_LUA="$HOME/.config/hypr/hyprland.lua"
 HYPRPAPER_CONF="$HOME/.config/hypr/hyprpaper.conf"
+HYPRLOCK_CONF="$HOME/.config/hypr/hyprlock.conf"
 
 if [ "$CURRENT_THEME" = "teal" ]; then
     NEW_THEME="red"
@@ -64,6 +65,11 @@ if [ "$CURRENT_THEME" = "teal" ]; then
         hyprpaper >/dev/null 2>&1 &
     fi
 
+    # 7. Hyprlock Colors
+    if [ -f "$HYPRLOCK_CONF" ]; then
+        sed --follow-symlinks -i 's/rgba(0, 255, 255, 1.0)/rgba(239, 89, 111, 1.0)/g' "$HYPRLOCK_CONF"
+    fi
+
     notify-send "Theme Changed" "Switched to HyperTerm Red theme" -i preferences-desktop-theme
 else
     NEW_THEME="teal"
@@ -108,6 +114,11 @@ else
         sed --follow-symlinks -i "s|$HOME/.config/hypr/wallpapers/red.jpg|$HOME/.config/hypr/wallpapers/$TEAL_WP|g" "$HYPRPAPER_CONF"
         pkill hyprpaper
         hyprpaper >/dev/null 2>&1 &
+    fi
+
+    # 7. Hyprlock Colors
+    if [ -f "$HYPRLOCK_CONF" ]; then
+        sed --follow-symlinks -i 's/rgba(239, 89, 111, 1.0)/rgba(0, 255, 255, 1.0)/g' "$HYPRLOCK_CONF"
     fi
 
     notify-send "Theme Changed" "Switched to Teal theme" -i preferences-desktop-theme
