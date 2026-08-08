@@ -80,8 +80,8 @@ hl.config({
 
         border_size = 2,
 
-        -- NOTE: theme toggle (SUPER+SHIFT+R) sed-replaces 33ccffee <-> ef596fee
-        -- and 00ff99ee <-> d8985fee. Keep these exact strings.
+        -- NOTE: theme toggle (SUPER+SHIFT+R) cycles 5 themes via array-driven sed.
+        -- See common/.local/bin/toggle-theme.sh for the color palette.
         col = {
             active_border   = { colors = { "rgba(ef596fee)", "rgba(d8985fee)" }, angle = 45 },
             inactive_border = "rgba(c24038EE)",
