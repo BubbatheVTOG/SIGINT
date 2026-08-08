@@ -2,19 +2,19 @@
 # Install: sudo stow -R -t / system-matt   (from the repo's dotfiles/ dir)
 # Docs:  man 5 greetd | https://man.sr.ht/~kennylevinsen/greetd/
 #
-# NOTE: command is wrapped with `sh -c 'sleep 0.5 && clear && ...'` to let
-# kernel/systemd boot messages settle before tuigreet paints, preventing
-# garbled display.  --width/--container-padding/--prompt-padding tuned for
-# 1440p main monitor (DP-5) so the login box is centered and readable.
+# NOTE: vt = 2 keeps the greeter on a clean terminal away from systemd boot
+# messages (which go to vt 1).  --width/--container-padding/--prompt-padding
+# tuned for 1440p main monitor (DP-5) so the login box is centered.
 
 [terminal]
-# The VT to run the greeter on.
-vt = 1
+# Use vt = 2 to avoid kernel/systemd boot messages on vt 1.
+# Console output stays on vt 1 (Ctrl+Alt+F1 to see boot messages).
+vt = 2
 
 [default_session]
 # tuigreet greeter, accented to match the teal desktop theme.
 #   --time      show a clock on the greeter
 #   --remember  remember the last logged-in username
 #   --cmd       session command started after successful login
-command = "sh -c 'sleep 0.5 && clear && tuigreet --time --remember --theme \"container=black;text=cyan;prompt=cyan;input=cyan;action=cyan;button=cyan;border=cyan;time=cyan;greet=cyan;title=cyan\" --container-padding 2 --prompt-padding 2 --width 120 --cmd start-hyprland'"
+command = "tuigreet --time --remember --theme 'container=black;text=cyan;prompt=cyan;input=cyan;action=cyan;button=cyan;border=cyan;time=cyan;greet=cyan;title=cyan' --container-padding 2 --prompt-padding 2 --width 120 --cmd start-hyprland"
 user = "greeter"
