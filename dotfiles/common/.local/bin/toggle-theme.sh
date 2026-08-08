@@ -23,8 +23,6 @@ H_PRI=("#33ccff" "#ef596f" "#33ff55" "#ffdd00" "#ff8833" "#bd00ff")
 HC_PRI=("#00ffff" "#ef596f" "#33ff55" "#ffdd00" "#ff8833" "#bd00ff")
 # Hex secondary (#00ff99 family) — kitty selection_background, url_color
 H_SEC=("#00ff99" "#d8985f" "#88ff44" "#ffee44" "#ffbb66" "#d65fff")
-# Hex light (#00ffd5 family) — waybar @teal-light
-H_LGT=("#00ffd5" "#d8985f" "#88ff55" "#ffee55" "#ffcc88" "#dd88ff")
 # Hex dim (#00cccc family) — waybar @teal-dim, fastfetch separator
 H_DIM=("#00cccc" "#c24038" "#33bb44" "#ccaa00" "#cc7722" "#9900cc")
 # rgba hex primary — hyprland active_border[0]
@@ -75,7 +73,6 @@ fi
 if [ -f "$WAYBAR_CSS" ]; then
     sed --follow-symlinks -i "s/@define-color teal ${HC_PRI[$current_idx]};/@define-color teal ${HC_PRI[$new_idx]};/g" "$WAYBAR_CSS"
     sed --follow-symlinks -i "s/@define-color teal-dim ${H_DIM[$current_idx]};/@define-color teal-dim ${H_DIM[$new_idx]};/g" "$WAYBAR_CSS"
-    sed --follow-symlinks -i "s/@define-color teal-light ${H_LGT[$current_idx]};/@define-color teal-light ${H_LGT[$new_idx]};/g" "$WAYBAR_CSS"
     sed --follow-symlinks -i "s/rgba(${D_RGB[$current_idx]}, /rgba(${D_RGB[$new_idx]}, /g" "$WAYBAR_CSS"
     pkill -SIGUSR2 waybar
 fi
