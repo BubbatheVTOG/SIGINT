@@ -92,8 +92,9 @@ diffs should be only live theme state.
 - **sigint**: greeter user is `greetd`; Hyprland launches via
   `start-hyprland` (Asahi GPU wrapper, not the bare `Hyprland` binary).
   Single monitor `eDP-1`. Has lid/battery handlers in hyprland.lua.
-- **matt**: greeter user is `greeter`; Hyprland launches via bare
-  `Hyprland`. Three monitors DP-4/DP-5/DP-6 with rotations. GPU passthrough.
+- **matt**: greeter user is `greeter`; Hyprland launches via
+  `start-hyprland` (Hyprland recommends the wrapper over the bare binary).
+  Three monitors DP-4/DP-5/DP-6 with rotations. GPU passthrough.
   `OPENCODE_BIN_PATH` workaround for a Bun crash on Ryzen 5800X3D
   (matt-only, set conditionally in `common/.zshrc.local`).
 

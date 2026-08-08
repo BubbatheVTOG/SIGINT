@@ -1,6 +1,9 @@
-# greetd configuration — managed via SIGINT dotfiles (system package)
-# Install: sudo stow -R -t / system   (from the repo's dotfiles/ dir)
+# greetd configuration — managed via SIGINT dotfiles (system-matt package)
+# Install: sudo stow -R -t / system-matt   (from the repo's dotfiles/ dir)
 # Docs:  man 5 greetd | https://man.sr.ht/~kennylevinsen/greetd/
+#
+# NOTE: command is wrapped with `sh -c 'clear && ...'` to clear any kernel
+# boot messages from the VT before tuigreet paints, preventing garbled display.
 
 [terminal]
 # The VT to run the greeter on.
@@ -11,5 +14,5 @@ vt = 1
 #   --time      show a clock on the greeter
 #   --remember  remember the last logged-in username
 #   --cmd       session command started after successful login
-command = "tuigreet --time --remember --theme 'border=cyan;prompt=cyan;input=cyan;action=cyan;button=cyan' --cmd Hyprland"
+command = "sh -c 'clear && tuigreet --time --remember --theme \"border=cyan;prompt=cyan;input=cyan;action=cyan;button=cyan\" --cmd start-hyprland'"
 user = "greeter"
