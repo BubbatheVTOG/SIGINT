@@ -28,8 +28,9 @@ if [ -d ~/.bashrc.d ]; then
 fi
 unset rc
 
-# opencode
-export PATH=/home/bubba/.opencode/bin:$PATH
+# opencode — matt uses the npm-global install; sigint may use the official
+# ~/.opencode/bin installer. Missing PATH dirs are ignored, so both are safe.
+export PATH="$HOME/.npm-global/bin:$HOME/.opencode/bin:$PATH"
 
 # Highlight directories in Cyan and Executables in Mint Green
 export LS_COLORS="di=01;38;5;81:ex=01;38;5;48:"
@@ -62,4 +63,4 @@ if [ -t 1 ]; then
 fi
 
 
-. "$HOME/.local/bin/env"
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"

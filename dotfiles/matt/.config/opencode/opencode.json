@@ -1,0 +1,85 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "llamacpp": {
+      "name": "(local)",
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        "baseURL": "http://localhost:8000/v1",
+        "apiKey": "bubba"
+      },
+      "models": {
+        "bubba": {
+          "name": "DeepSeek-V4-Flash (llama.cpp)",
+          "limit": {
+            "context": 262144,
+            "output": 8192
+          }
+        }
+      }
+    },
+    "openrouter": {
+      "models": {
+        "<model-slug>": {
+          "options": {
+            "provider": {
+              "sort": "throughput"
+            }
+          }
+        }
+      }
+    },
+    "vllm": {
+      "name": "(local)",
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        "baseURL": "https://ai.xorro.tech/v1",
+        "apiKey": "{env:VLLM_API_KEY}"
+      },
+      "models": {
+        "bubba": {
+          "name": "bubba",
+          "limit": {
+            "context": 256000,
+            "output": 65536
+          },
+          "options": {
+            "temperature": 0.6,
+            "top_p": 0.95,
+            "top_k": 20,
+            "min_p": 0.0,
+            "presence_penalty": 0.0,
+            "repetition_penalty": 1.0
+          }
+        }
+      }
+    }
+  },
+  "compaction": {
+    "prune": true,
+    "auto": true,
+    "reserved": 20000
+  },
+  "mcp": {
+    "searxng": {
+      "type": "local",
+      "command": ["npx", "-y", "mcp-searxng"],
+      "environment": {
+        "SEARXNG_URL": "http://localhost:8080"
+      },
+      "enabled": true,
+      "timeout": 30000
+    },
+    "htb": {
+      "type": "remote",
+      "url": "https://mcp.hackthebox.ai/v1/ctf/mcp/",
+      "enabled": true,
+      "headers": {
+        "Authorization": "Bearer {env:HTB_TOKEN}"
+      }
+    }
+  },
+  "tools": {
+    "searxng_*": true
+  }
+}

@@ -8,8 +8,15 @@
 export HISTSIZE=50000
 export SAVEHIST=50000
 
-# opencode
-export PATH=/home/bubba/.opencode/bin:$PATH
+# opencode — matt uses the npm-global install; sigint may use the official
+# ~/.opencode/bin installer. Missing PATH dirs are ignored, so both are safe.
+export PATH="$HOME/.npm-global/bin:$HOME/.opencode/bin:$PATH"
+
+# opencode binary path — matt-only workaround for a Bun bus crash on the
+# Ryzen 5800X3D. Set only where the npm-installed binary actually exists.
+if [ -x "$HOME/.npm-global/lib/node_modules/opencode-ai/bin/opencode.exe" ]; then
+    export OPENCODE_BIN_PATH="$HOME/.npm-global/lib/node_modules/opencode-ai/bin/opencode.exe"
+fi
 
 # bun completions
 [ -s "/home/bubba/.bun/_bun" ] && source "/home/bubba/.bun/_bun"

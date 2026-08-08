@@ -9,6 +9,15 @@ else
     CURRENT_THEME="teal"
 fi
 
+# Default "teal" wallpaper differs per host:
+#   matt   -> teal_web.jpg (desktop wallpaper)
+#   sigint -> teal.jpg
+# Hostname-based so both toggle directions resolve the right file.
+case "$(hostname)" in
+    matt) TEAL_WP="teal_web.jpg" ;;
+    *)    TEAL_WP="teal.jpg" ;;
+esac
+
 WAYBAR_CSS="$HOME/.config/waybar/style.css"
 KITTY_CONF="$HOME/.config/kitty/kitty.conf"
 ROFI_RASI="$HOME/.config/rofi/themes/black-neon.rasi"
@@ -55,7 +64,7 @@ if [ "$CURRENT_THEME" = "teal" ]; then
 
     # 6. Hyprpaper Wallpaper
     if [ -f "$HYPRPAPER_CONF" ]; then
-        sed --follow-symlinks -i "s|$HOME/.config/hypr/wallpapers/teal.jpg|$HOME/.config/hypr/wallpapers/red.jpg|g" "$HYPRPAPER_CONF"
+        sed --follow-symlinks -i "s|$HOME/.config/hypr/wallpapers/$TEAL_WP|$HOME/.config/hypr/wallpapers/red.jpg|g" "$HYPRPAPER_CONF"
         pkill hyprpaper
         hyprpaper >/dev/null 2>&1 &
     fi
@@ -100,7 +109,7 @@ else
 
     # 6. Hyprpaper Wallpaper
     if [ -f "$HYPRPAPER_CONF" ]; then
-        sed --follow-symlinks -i "s|$HOME/.config/hypr/wallpapers/red.jpg|$HOME/.config/hypr/wallpapers/teal.jpg|g" "$HYPRPAPER_CONF"
+        sed --follow-symlinks -i "s|$HOME/.config/hypr/wallpapers/red.jpg|$HOME/.config/hypr/wallpapers/$TEAL_WP|g" "$HYPRPAPER_CONF"
         pkill hyprpaper
         hyprpaper >/dev/null 2>&1 &
     fi

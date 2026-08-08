@@ -3629,7 +3629,7 @@ unfunction grml_status_feature
 # mode: sh
 # End:
 
-. "$HOME/.local/bin/env"
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 
 # bun completions
 [ -s "/home/bubba/.bun/_bun" ] && source "/home/bubba/.bun/_bun"

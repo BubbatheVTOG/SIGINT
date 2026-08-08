@@ -21,6 +21,7 @@
         "custom/sep3",
         "memory",
         "custom/sep4",
+        "custom/gpu-status",
         "custom/sep5",
         "clock",
         "tray"
@@ -28,21 +29,7 @@
 
     "hyprland/workspaces": {
         "disable-scroll": false,
-        "format": "{name}",
-        "format-icons": {
-            "1": "1",
-            "2": "2",
-            "3": "3",
-            "4": "4",
-            "5": "5",
-            "6": "6",
-            "7": "7",
-            "8": "8",
-            "9": "9",
-            "10": "10"
-        },
-        "on-click": "hyprctl dispatch focusworkspacebyname current",
-        "on-click-right": "hyprctl dispatch workspace current"
+        "all-outputs": true
     },
 
     "tray": {
@@ -90,6 +77,15 @@
     "custom/sep3": { "format": "│", "tooltip": false },
     "custom/sep4": { "format": "│", "tooltip": false },
     "custom/sep5": { "format": "│", "tooltip": false },
+
+    "custom/gpu-status": {
+        "exec": "/home/bubba/.local/bin/gpu-status --json",
+        "interval": 10,
+        "return-type": "json",
+        "format": "{}",
+        "tooltip": true,
+        "on-click": "sudo toggle-gpu status"
+    },
 
     "bluetooth": {
         "format": "{status} ",

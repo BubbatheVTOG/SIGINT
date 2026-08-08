@@ -1,0 +1,29 @@
+#!/bin/bash
+driver=$(basename "$(readlink /sys/bus/pci/devices/0000:0b:00.0/driver)" 2>/dev/null)
+
+case "$driver" in
+    vfio-pci) label="VM"; desc="vfio-pci";;
+    nvidia)   label="Host"; desc="nvidia";;
+    *)        label="?"; desc="unknown";;
+esac
+
+case "${1:-}" in
+    --json|-j)
+        echo "{\"text\":\" $label\",\"tooltip\":\"GPU: $label mode ($desc)\",\"class\":\"$(echo "$label" | tr 'A-Z' 'a-z')\"}"
+        ;;
+    --help|-h|help)
+        echo "Usage: gpu-status [OPTION]"
+        echo "Show passthrough GPU binding status"
+        echo ""
+        echo "  --json, -j   Output JSON for waybar"
+        echo "  --help, -h   Show this help"
+        echo ""
+        echo "Current: $label mode ($desc)"
+        echo "Toggle with: sudo toggle-gpu {vm|host}"
+        echo "Need reboot after toggle."
+        ;;
+    *)
+        echo "GPU: $label mode ($desc)"
+        echo "Run 'gpu-status --help' for options"
+        ;;
+esac

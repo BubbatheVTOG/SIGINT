@@ -5,3 +5,6 @@
 .zcompdump*
 .zdirs
 *.bak
+
+# Bun lockfile — regenerated from package.json by `bun install` (opencode runs it)
+bun.lock
