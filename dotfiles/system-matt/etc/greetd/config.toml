@@ -2,8 +2,10 @@
 # Install: sudo stow -R -t / system-matt   (from the repo's dotfiles/ dir)
 # Docs:  man 5 greetd | https://man.sr.ht/~kennylevinsen/greetd/
 #
-# NOTE: command is wrapped with `sh -c 'clear && ...'` to clear any kernel
-# boot messages from the VT before tuigreet paints, preventing garbled display.
+# NOTE: command is wrapped with `sh -c 'sleep 0.5 && clear && ...'` to let
+# kernel/systemd boot messages settle before tuigreet paints, preventing
+# garbled display.  --width/--container-padding/--prompt-padding tuned for
+# 1440p main monitor (DP-5) so the login box is centered and readable.
 
 [terminal]
 # The VT to run the greeter on.
@@ -14,5 +16,5 @@ vt = 1
 #   --time      show a clock on the greeter
 #   --remember  remember the last logged-in username
 #   --cmd       session command started after successful login
-command = "sh -c 'clear && tuigreet --time --remember --theme \"border=cyan;prompt=cyan;input=cyan;action=cyan;button=cyan\" --cmd start-hyprland'"
+command = "sh -c 'sleep 0.5 && clear && tuigreet --time --remember --theme \"container=black;text=cyan;prompt=cyan;input=cyan;action=cyan;button=cyan;border=cyan;time=cyan;greet=cyan;title=cyan\" --container-padding 2 --prompt-padding 2 --width 120 --cmd start-hyprland'"
 user = "greeter"
