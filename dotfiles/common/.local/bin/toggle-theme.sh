@@ -9,14 +9,8 @@ else
     CURRENT_THEME="teal"
 fi
 
-# Default "teal" wallpaper differs per host:
-#   matt   -> teal_web.jpg (desktop wallpaper)
-#   sigint -> teal.jpg
-# Hostname-based so both toggle directions resolve the right file.
-case "$(hostname)" in
-    matt) TEAL_WP="teal_web.jpg" ;;
-    *)    TEAL_WP="teal.jpg" ;;
-esac
+# Both hosts use the same themed wallpaper pair: teal.jpg <-> red.jpg
+TEAL_WP="teal.jpg"
 
 WAYBAR_CSS="$HOME/.config/waybar/style.css"
 KITTY_CONF="$HOME/.config/kitty/kitty.conf"

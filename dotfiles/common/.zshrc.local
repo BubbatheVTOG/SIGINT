@@ -3,6 +3,11 @@
 # Starship is available but intentionally disabled in favor of the grml prompt.
 # To re-enable starship, add: eval "$($HOME/.local/bin/starship init zsh)"
 
+# NOTE: sourced TWICE on hosts where both /etc/zsh/zshrc and ~/.zshrc are grml
+# (both run zrclocal). Guard against double-sourcing (double fastfetch, PATH dupes).
+[[ -n "${_ZSHRC_LOCAL_SOURCED:-}" ]] && return 0
+_ZSHRC_LOCAL_SOURCED=1
+
 # History — grml's guard (HISTSIZE==30 || empty) doesn't fire on zsh 5.9 (default 1000),
 # so set explicit values here to keep persistent history.
 export HISTSIZE=50000

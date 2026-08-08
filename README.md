@@ -42,8 +42,9 @@ stow -R -t ~ common matt
 
 `SUPER + SHIFT + R` flips between teal (default) and red across Hyprland, Waybar, Kitty, Rofi, Tmux, and Hyprpaper wallpaper.
 
-Default teal wallpaper is per-host: `teal.jpg` (sigint), `teal_web.jpg` (matt).
-`toggle-theme.sh` picks the right one via `hostname`.
+Both hosts use the same wallpaper pair: `teal.jpg` (teal theme) and `red.jpg`
+(red theme). `teal_web.jpg` is also available in `common/.config/hypr/wallpapers/`
+if you want a third option.
 
 ## Secrets
 

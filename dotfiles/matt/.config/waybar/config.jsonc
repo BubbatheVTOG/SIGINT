@@ -29,7 +29,8 @@
 
     "hyprland/workspaces": {
         "disable-scroll": false,
-        "all-outputs": true
+        "all-outputs": true,
+        "on-click": "hyprctl eval 'hl.dsp.focus({ workspace = {id} })'"
     },
 
     "tray": {
