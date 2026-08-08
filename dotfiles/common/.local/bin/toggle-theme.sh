@@ -23,10 +23,11 @@ if [ "$CURRENT_THEME" = "teal" ]; then
     NEW_THEME="red"
     echo "red" > "$THEME_FILE"
 
-    # 1. Hyprland Borders
+    # 1. Hyprland Borders (active gradient + inactive)
     if [ -f "$HYPR_LUA" ]; then
         sed --follow-symlinks -i 's/rgba(33ccffee)/rgba(ef596fee)/g' "$HYPR_LUA"
         sed --follow-symlinks -i 's/rgba(00ff99ee)/rgba(d8985fee)/g' "$HYPR_LUA"
+        sed --follow-symlinks -i 's/rgba(00FFFFEE)/rgba(c24038EE)/g' "$HYPR_LUA"
         hyprctl reload >/dev/null
     fi
 
@@ -68,10 +69,11 @@ else
     NEW_THEME="teal"
     echo "teal" > "$THEME_FILE"
 
-    # 1. Hyprland Borders
+    # 1. Hyprland Borders (active gradient + inactive)
     if [ -f "$HYPR_LUA" ]; then
         sed --follow-symlinks -i 's/rgba(ef596fee)/rgba(33ccffee)/g' "$HYPR_LUA"
         sed --follow-symlinks -i 's/rgba(d8985fee)/rgba(00ff99ee)/g' "$HYPR_LUA"
+        sed --follow-symlinks -i 's/rgba(c24038EE)/rgba(00FFFFEE)/g' "$HYPR_LUA"
         hyprctl reload >/dev/null
     fi
 
