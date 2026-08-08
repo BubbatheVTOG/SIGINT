@@ -1,18 +1,15 @@
--- Hyprland Lua Configuration
--- Migrated from hyprland.conf
+-- Hyprland Lua Configuration - Host: sigint (Asahi laptop)
 
 ------------------
 ---- MONITORS ----
 ------------------
 
--- See https://wiki.hypr.land/Configuring/Basics/Monitors/
 hl.monitor({
-    output   = "",
+    output   = "eDP-1",
     mode     = "2560x1664@60",
     position = "0x0",
     scale    = 1.333,
 })
-
 
 ---------------------
 ---- MY PROGRAMS ----
@@ -23,12 +20,10 @@ local fileManager = "dolphin"
 local menu        = "rofi -show drun"
 local browser     = "firefox"
 
-
 -------------------
 ---- AUTOSTART ----
 -------------------
 
--- Autostart necessary processes
 hl.on("hyprland.start", function ()
     hl.exec_cmd("nm-applet")
     hl.exec_cmd("waybar")
@@ -38,16 +33,12 @@ hl.on("hyprland.start", function ()
     hl.exec_cmd("/home/bubba/.local/bin/nerd-dictation begin --cookie=/tmp/nerd-dictation-cookie --simulate-input-tool=WTYPE --suspend-on-start --pulse-device-name=alsa_input.platform-sound.HiFi__Headset__source")
 end)
 
-
 -------------------------------
 ---- ENVIRONMENT VARIABLES ----
 -------------------------------
 
 hl.env("XCURSOR_SIZE", "24")
 hl.env("HYPRCURSOR_SIZE", "24")
-hl.env("WAYLAND_DISPLAY", "wayland-1")
-hl.env("XDG_RUNTIME_DIR", "/run/user/1000")
-
 
 -----------------------
 ---- LOOK AND FEEL ----
@@ -67,8 +58,8 @@ hl.config({
         border_size = 2,
 
         col = {
-            active_border   = { colors = { "rgba(ef596fee)", "rgba(d8985fee)" }, angle = 45 },
-            inactive_border = "rgba(ef596fee)",
+            active_border   = { colors = { "rgba(33ccffee)", "rgba(00ff99ee)" }, angle = 45 },
+            inactive_border = "rgba(33ccffee)",
         },
 
         resize_on_border = false,
@@ -131,7 +122,6 @@ hl.config({
     },
 })
 
-
 --------------------
 ---- ANIMATIONS ----
 --------------------
@@ -160,7 +150,6 @@ hl.animation({ leaf = "workspacesIn",  enabled = true, speed = 1.21, bezier = "a
 hl.animation({ leaf = "workspacesOut", enabled = true, speed = 1.94, bezier = "almostLinear", style = "fade" })
 hl.animation({ leaf = "zoomFactor",    enabled = true, speed = 7,    bezier = "quick" })
 
-
 ------------------
 ---- GESTURES ----
 ------------------
@@ -171,7 +160,6 @@ hl.gesture({
     action    = "workspace",
 })
 
-
 -----------------
 ---- DEVICES ----
 -----------------
@@ -181,14 +169,12 @@ hl.device({
     sensitivity = -0.5,
 })
 
-
 ---------------------
 ---- KEYBINDINGS ----
 ---------------------
 
 local mainMod = "SUPER"
 
--- Example binds
 hl.bind(mainMod .. " + T", hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + Q", hl.dsp.window.close())
 hl.bind("SUPER + SHIFT + Q", hl.dsp.exit())
@@ -254,10 +240,9 @@ hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = tr
 hl.bind("XF86AudioPlay",  hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
 hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("playerctl previous"),   { locked = true })
 
--- Nerd dictation push-to-talk
-hl.bind("SUPER + N", hl.dsp.exec_cmd("/home/bubba/.local/bin/nerd-dictation end --cookie=/tmp/nerd-dictation-cookie"), { locked = true, repeating = true })
-hl.bind("SUPER + N", hl.dsp.exec_cmd("/home/bubba/.local/bin/nerd-dictation begin --cookie=/tmp/nerd-dictation-cookie"))
-
+-- Nerd dictation two-key push-to-talk: SUPER+N = begin, SUPER+M = end
+hl.bind("SUPER + N", hl.dsp.exec_cmd("/home/bubba/.local/bin/nerd-dictation begin --cookie=/tmp/nerd-dictation-cookie"), { locked = true })
+hl.bind("SUPER + M", hl.dsp.exec_cmd("/home/bubba/.local/bin/nerd-dictation end --cookie=/tmp/nerd-dictation-cookie"),   { locked = true })
 
 ----------------------
 ---- WINDOW RULES ----

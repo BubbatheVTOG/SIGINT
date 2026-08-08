@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Theme Toggle Script for Hyprland, Waybar, Kitty, Rofi, Dunst, OpenCode, and Hyprpaper Wallpaper
+# Theme Toggle Script for Hyprland, Waybar, Kitty, Rofi, Dunst, Tmux, and Hyprpaper Wallpaper
 
 THEME_FILE="$HOME/.cache/current_theme"
 
@@ -12,7 +12,7 @@ fi
 WAYBAR_CSS="$HOME/.config/waybar/style.css"
 KITTY_CONF="$HOME/.config/kitty/kitty.conf"
 ROFI_RASI="$HOME/.config/rofi/themes/black-neon.rasi"
-OPENCODE_JSON="$HOME/.config/opencode/opencode.json"
+TMUX_CONF="$HOME/.tmux.conf"
 HYPR_LUA="$HOME/.config/hypr/hyprland.lua"
 HYPRPAPER_CONF="$HOME/.config/hypr/hyprpaper.conf"
 
@@ -24,7 +24,6 @@ if [ "$CURRENT_THEME" = "teal" ]; then
     if [ -f "$HYPR_LUA" ]; then
         sed --follow-symlinks -i 's/rgba(33ccffee)/rgba(ef596fee)/g' "$HYPR_LUA"
         sed --follow-symlinks -i 's/rgba(00ff99ee)/rgba(d8985fee)/g' "$HYPR_LUA"
-        sed --follow-symlinks -i 's/rgba(00FFFFEE)/rgba(ef596fee)/g' "$HYPR_LUA"
         hyprctl reload >/dev/null
     fi
 
@@ -48,14 +47,15 @@ if [ "$CURRENT_THEME" = "teal" ]; then
         sed --follow-symlinks -i 's/#00ffff/#ef596f/g' "$ROFI_RASI"
     fi
 
-    # 5. OpenCode Theme
-    if [ -f "$OPENCODE_JSON" ]; then
-        sed --follow-symlinks -i 's/"theme": "hyper-term-teal"/"theme": "hyper-term"/g' "$OPENCODE_JSON"
+    # 5. Tmux Status Color
+    if [ -f "$TMUX_CONF" ]; then
+        sed --follow-symlinks -i 's/#33ccff/#ef596f/g' "$TMUX_CONF"
+        tmux source-file "$TMUX_CONF" 2>/dev/null
     fi
 
     # 6. Hyprpaper Wallpaper
     if [ -f "$HYPRPAPER_CONF" ]; then
-        sed --follow-symlinks -i 's|/home/bubba/.config/hypr/wallpapers/teal.jpg|/home/bubba/.config/hypr/wallpapers/red.jpg|g' "$HYPRPAPER_CONF"
+        sed --follow-symlinks -i "s|$HOME/.config/hypr/wallpapers/teal.jpg|$HOME/.config/hypr/wallpapers/red.jpg|g" "$HYPRPAPER_CONF"
         pkill hyprpaper
         hyprpaper >/dev/null 2>&1 &
     fi
@@ -69,7 +69,6 @@ else
     if [ -f "$HYPR_LUA" ]; then
         sed --follow-symlinks -i 's/rgba(ef596fee)/rgba(33ccffee)/g' "$HYPR_LUA"
         sed --follow-symlinks -i 's/rgba(d8985fee)/rgba(00ff99ee)/g' "$HYPR_LUA"
-        sed --follow-symlinks -i 's/rgba(ef596fee)/rgba(33ccffee)/g' "$HYPR_LUA"
         hyprctl reload >/dev/null
     fi
 
@@ -93,14 +92,15 @@ else
         sed --follow-symlinks -i 's/#ef596f/#00ffff/g' "$ROFI_RASI"
     fi
 
-    # 5. OpenCode Theme
-    if [ -f "$OPENCODE_JSON" ]; then
-        sed --follow-symlinks -i 's/"theme": "hyper-term"/"theme": "hyper-term-teal"/g' "$OPENCODE_JSON"
+    # 5. Tmux Status Color
+    if [ -f "$TMUX_CONF" ]; then
+        sed --follow-symlinks -i 's/#ef596f/#33ccff/g' "$TMUX_CONF"
+        tmux source-file "$TMUX_CONF" 2>/dev/null
     fi
 
     # 6. Hyprpaper Wallpaper
     if [ -f "$HYPRPAPER_CONF" ]; then
-        sed --follow-symlinks -i 's|/home/bubba/.config/hypr/wallpapers/red.jpg|/home/bubba/.config/hypr/wallpapers/teal.jpg|g' "$HYPRPAPER_CONF"
+        sed --follow-symlinks -i "s|$HOME/.config/hypr/wallpapers/red.jpg|$HOME/.config/hypr/wallpapers/teal.jpg|g" "$HYPRPAPER_CONF"
         pkill hyprpaper
         hyprpaper >/dev/null 2>&1 &
     fi

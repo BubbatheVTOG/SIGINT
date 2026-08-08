@@ -9,7 +9,7 @@
       "npm": "@ai-sdk/openai-compatible",
       "name": "Ollama (local)",
       "options": {
-        "baseURL": "http://REDACTED_OLLAMA_URL/v1",
+        "baseURL": "{env:OLLAMA_BASE_URL}",
         "apiKey": "ollama"
       },
       "models": {

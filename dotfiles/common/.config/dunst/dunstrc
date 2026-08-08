@@ -36,7 +36,7 @@
     
     ### Behavior ###
     dmenu = /usr/bin/dmenu -p dunst
-    browser = /usr/bin/firefox -new-tab
+    browser = /usr/bin/firefox --new-tab
     always_run_script = true
     title = Dunst
     class = Dunst

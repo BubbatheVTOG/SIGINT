@@ -3,4 +3,5 @@
 
 # Runtime caches and backups
 .zcompdump*
+.zdirs
 *.bak

@@ -9,7 +9,6 @@
         "z-ai/glm-5.2": {
           "options": {
             "provider": {
-              "order": ["<FAST_PROVIDER_SLUG>", "<CHEAP_PROVIDER_SLUG>"],
               "allow_fallbacks": true
             }
           }
@@ -21,7 +20,7 @@
       "npm": "@ai-sdk/openai-compatible",
       "options": {
         "baseURL": "http://ai.xorro.tech/v1",
-		"apiKey": "bubba"
+		"apiKey": "{env:VLLM_API_KEY}"
       },
       "models": {
         "bubba": {
@@ -78,7 +77,7 @@
       "url": "https://mcp.hackthebox.ai/v1/ctf/mcp/",
       "enabled": true,
       "headers": {
-        "Authorization": "Bearer REDACTED_HTB_TOKEN"
+        "Authorization": "Bearer {env:HTB_TOKEN}"
       }
     },
     "searxng": {

@@ -46,12 +46,11 @@ RESET='\[\e[0m\]'
 export PS1="${CYAN}\w ${MINT}❯ ${RESET}"
 
 
-alias llama_start='./home/bubba/git/llama-cpp/build/bin/llama-server --model ~/models/deepseek-r1-8b-q4_k_m.gguf --host 127.0.0.1 --port 8080 --gpu-layers 35'
+alias llama_start='/home/bubba/git/llama-cpp/build/bin/llama-server --model ~/models/deepseek-r1-8b-q4_k_m.gguf --host 127.0.0.1 --port 8081 --gpu-layers 35'
 
 # Fix SSH issues (including delete key) using kitty's ssh kitten
 alias ssh='kitty +kitten ssh'
 
-fastfetch
 eval "$(zoxide init bash)"
 
 if [ -t 1 ]; then
