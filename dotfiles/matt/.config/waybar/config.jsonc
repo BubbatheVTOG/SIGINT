@@ -9,7 +9,7 @@
     "border-radius": 5,
 
     "modules-left": [
-        "hyprland/workspaces"
+        "ext/workspaces"
     ],
     "modules-center": [],
     "modules-right": [
@@ -27,10 +27,12 @@
         "tray"
     ],
 
-    "hyprland/workspaces": {
+    "ext/workspaces": {
         "disable-scroll": false,
         "all-outputs": true,
-        "on-click": "hyprctl eval 'hl.dsp.focus({ workspace = {id} })'"
+        "sort-by-name": true,
+        "sort-by-id": false,
+        "on-click": "activate"
     },
 
     "tray": {
