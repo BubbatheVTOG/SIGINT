@@ -51,12 +51,12 @@ Requires packages: `greetd greetd-tuigreet` (then `systemctl enable greetd`).
 
 ## Theme Toggle
 
-`SUPER + SHIFT + R` cycles through teal, red, green, yellow, orange, and purple
-across Hyprland, Waybar, Kitty, Rofi, Tmux, and Hyprpaper wallpaper.
+`SUPER + SHIFT + R` cycles through teal, red, green, yellow, orange, purple,
+and white across Hyprland, Waybar, Kitty, Rofi, Tmux, and Hyprpaper wallpaper.
 
 Each theme has a matching wallpaper in `common/.config/hypr/wallpapers/`
-(`teal.jpg`, `red.jpg`, `green.jpg`, `yellow.jpg`, `orange.jpg`, `purple.jpg`).
-`teal_web.jpg` is also available there as an extra option.
+(`teal.jpg`, `red.jpg`, `green.jpg`, `yellow.jpg`, `orange.jpg`, `purple.jpg`,
+`white.jpg`). `teal_web.jpg` is also available there as an extra option.
 
 ## Secrets
 

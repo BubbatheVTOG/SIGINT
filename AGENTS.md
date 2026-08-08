@@ -48,8 +48,8 @@ which needs `greetd` + `start-hyprland`).
 `toggle-theme.sh` (SUPER+SHIFT+R) rewrites color values in-place across
 kitty, rofi, waybar, tmux, hyprland borders, and hyprpaper wallpaper via
 `sed --follow-symlinks` — directly into the stowed repo working tree. It
-cycles 6 themes: teal, red, green, yellow, orange, purple. State lives in
-`~/.cache/current_theme` (one of those six names).
+cycles 7 themes: teal, red, green, yellow, orange, purple, white. State lives in
+`~/.cache/current_theme` (one of those seven names).
 
 Consequence: `git status` on a host commonly shows uncommitted diffs that are
 **the live theme state**, not real edits. When pulling across hosts:
