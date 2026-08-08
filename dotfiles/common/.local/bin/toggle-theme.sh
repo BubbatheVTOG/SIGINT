@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# Theme Toggle Script — cycles 5 themes via array-driven sed replacements.
+# Theme Toggle Script — cycles 6 themes via array-driven sed replacements.
 #
 # Affected: Hyprland borders, Waybar CSS, Kitty, Rofi, Tmux, Hyprpaper
 #           wallpaper, Hyprlock, Fastfetch palette.
 #
-# Cycle: teal → red → green → yellow → orange → teal → ...
+# Cycle: teal → red → green → yellow → orange → purple → teal → ...
 # State: ~/.cache/current_theme (theme name string).
 #
 # All color values are defined in indexed arrays below — one entry per theme
@@ -13,30 +13,30 @@
 THEME_FILE="$HOME/.cache/current_theme"
 
 # --- Theme cycle order (index = position in this list) ---
-THEMES=(teal red green yellow orange)
-declare -A IDX=( [teal]=0 [red]=1 [green]=2 [yellow]=3 [orange]=4 )
+THEMES=(teal red green yellow orange purple)
+declare -A IDX=( [teal]=0 [red]=1 [green]=2 [yellow]=3 [orange]=4 [purple]=5 )
 
-# --- Color palettes (5 values each, one per theme index) ---
+# --- Color palettes (6 values each, one per theme index) ---
 # Hex primary (#33ccff family) — kitty cursor/border/tab/ANSI, tmux status
-H_PRI=("#33ccff" "#ef596f" "#33ff55" "#ffdd00" "#ff8833")
+H_PRI=("#33ccff" "#ef596f" "#33ff55" "#ffdd00" "#ff8833" "#bd00ff")
 # Hex cyan variant (#00ffff family) — rofi foreground, waybar @teal, fastfetch
-HC_PRI=("#00ffff" "#ef596f" "#33ff55" "#ffdd00" "#ff8833")
+HC_PRI=("#00ffff" "#ef596f" "#33ff55" "#ffdd00" "#ff8833" "#bd00ff")
 # Hex secondary (#00ff99 family) — kitty selection_background, url_color
-H_SEC=("#00ff99" "#d8985f" "#88ff44" "#ffee44" "#ffbb66")
+H_SEC=("#00ff99" "#d8985f" "#88ff44" "#ffee44" "#ffbb66" "#d65fff")
 # Hex light (#00ffd5 family) — waybar @teal-light
-H_LGT=("#00ffd5" "#d8985f" "#88ff55" "#ffee55" "#ffcc88")
+H_LGT=("#00ffd5" "#d8985f" "#88ff55" "#ffee55" "#ffcc88" "#dd88ff")
 # Hex dim (#00cccc family) — waybar @teal-dim, fastfetch separator
-H_DIM=("#00cccc" "#c24038" "#33bb44" "#ccaa00" "#cc7722")
+H_DIM=("#00cccc" "#c24038" "#33bb44" "#ccaa00" "#cc7722" "#9900cc")
 # rgba hex primary — hyprland active_border[0]
-R_PRI=("rgba(33ccffee)" "rgba(ef596fee)" "rgba(33ff55ee)" "rgba(ffdd00ee)" "rgba(ff8833ee)")
+R_PRI=("rgba(33ccffee)" "rgba(ef596fee)" "rgba(33ff55ee)" "rgba(ffdd00ee)" "rgba(ff8833ee)" "rgba(bd00ffee)")
 # rgba hex secondary — hyprland active_border[1]
-R_SEC=("rgba(00ff99ee)" "rgba(d8985fee)" "rgba(88ff44ee)" "rgba(ffee44ee)" "rgba(ffbb66ee)")
+R_SEC=("rgba(00ff99ee)" "rgba(d8985fee)" "rgba(88ff44ee)" "rgba(ffee44ee)" "rgba(ffbb66ee)" "rgba(d65ffeee)")
 # rgba hex dim — hyprland inactive_border
-R_DIM=("rgba(00FFFFEE)" "rgba(c24038EE)" "rgba(33bb44EE)" "rgba(ccaa00EE)" "rgba(cc7722EE)")
+R_DIM=("rgba(00FFFFEE)" "rgba(c24038EE)" "rgba(33bb44EE)" "rgba(ccaa00EE)" "rgba(cc7722EE)" "rgba(9900ccEE)")
 # Decimal RGB triple — hyprlock + waybar hardcoded rgba (alpha preserved)
-D_RGB=("0, 255, 255" "239, 89, 111" "51, 255, 85" "255, 221, 0" "255, 136, 51")
+D_RGB=("0, 255, 255" "239, 89, 111" "51, 255, 85" "255, 221, 0" "255, 136, 51" "189, 0, 255")
 # Wallpaper filenames (in ~/.config/hypr/wallpapers/)
-WP=(teal.jpg red.jpg green.jpg yellow.jpg orange.jpg)
+WP=(teal.jpg red.jpg green.jpg yellow.jpg orange.jpg purple.jpg)
 
 # --- Config file paths ---
 WAYBAR_CSS="$HOME/.config/waybar/style.css"

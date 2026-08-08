@@ -51,11 +51,12 @@ Requires packages: `greetd greetd-tuigreet` (then `systemctl enable greetd`).
 
 ## Theme Toggle
 
-`SUPER + SHIFT + R` flips between teal (default) and red across Hyprland, Waybar, Kitty, Rofi, Tmux, and Hyprpaper wallpaper.
+`SUPER + SHIFT + R` cycles through teal, red, green, yellow, orange, and purple
+across Hyprland, Waybar, Kitty, Rofi, Tmux, and Hyprpaper wallpaper.
 
-Both hosts use the same wallpaper pair: `teal.jpg` (teal theme) and `red.jpg`
-(red theme). `teal_web.jpg` is also available in `common/.config/hypr/wallpapers/`
-if you want a third option.
+Each theme has a matching wallpaper in `common/.config/hypr/wallpapers/`
+(`teal.jpg`, `red.jpg`, `green.jpg`, `yellow.jpg`, `orange.jpg`, `purple.jpg`).
+`teal_web.jpg` is also available there as an extra option.
 
 ## Secrets
 

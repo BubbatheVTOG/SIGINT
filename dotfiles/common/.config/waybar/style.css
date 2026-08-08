@@ -134,13 +134,9 @@ button:hover {
    ---------------------------
 */
 
-/* Hardware/System */
-#cpu { color: @teal; }
-#memory { color: @purple; }
-#disk { color: @orange; }
-#backlight { color: @yellow; }
+/* Hardware/System — inherit themed @teal */
+/* #cpu, #memory, #disk, #backlight: base color inherited */
 
-#battery { color: @green; }
 #battery.charging, #battery.plugged { color: @green; }
 #battery.critical:not(.charging) { color: @red; }
 #battery.warning:not(.charging) { color: @orange; }
@@ -157,16 +153,11 @@ button:hover {
 #bluetooth.connected { color: @green; }
 #bluetooth.off, #bluetooth.disabled { color: @red; }
 
-/* Audio/Media */
-#pulseaudio { color: @teal-light; }
+/* Audio/Media — base color inherited; states keep meaning */
 #pulseaudio.muted { color: @grey; }
 
-#wireplumber { color: @pink; }
 #wireplumber.muted { color: @red; }
 
-#custom-media { color: @green; }
-
-#mpd { color: @green; }
 #mpd.disconnected { color: @red; }
 #mpd.stopped { color: @grey; }
 #mpd.paused { color: @gold; }
@@ -175,11 +166,9 @@ button:hover {
 #clock {
     font-weight: bold;
     letter-spacing: 1px;
-    color: @teal-light;
 }
 
 #temperature.critical { color: @red; }
-#custom-weather { color: @blue; }
 
 #tray { color: @teal; }
 #tray > .passive { opacity: 0.5; }
@@ -190,10 +179,9 @@ button:hover {
 
 #language { min-width: 16px; padding: 4px 8px; }
 
-#keyboard-state { 
-    color: @teal-light; 
-    padding: 4px 0px; 
-    min-width: 16px; 
+#keyboard-state {
+    padding: 4px 0px;
+    min-width: 16px;
 }
 #keyboard-state > label.locked { color: @pink; }
 

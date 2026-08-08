@@ -47,8 +47,9 @@ which needs `greetd` + `start-hyprland`).
 
 `toggle-theme.sh` (SUPER+SHIFT+R) rewrites color values in-place across
 kitty, rofi, waybar, tmux, hyprland borders, and hyprpaper wallpaper via
-`sed --follow-symlinks` — directly into the stowed repo working tree. State
-lives in `~/.cache/current_theme` (`teal` or `red`).
+`sed --follow-symlinks` — directly into the stowed repo working tree. It
+cycles 6 themes: teal, red, green, yellow, orange, purple. State lives in
+`~/.cache/current_theme` (one of those six names).
 
 Consequence: `git status` on a host commonly shows uncommitted diffs that are
 **the live theme state**, not real edits. When pulling across hosts:
@@ -58,9 +59,15 @@ Consequence: `git status` on a host commonly shows uncommitted diffs that are
   non-overlapping color lines.
 
 Some theme states have been committed to the repo (red is currently baked
-into `common/` kitty/rofi/waybar/tmux). The `sigint/` hyprland borders and
-hyprpaper wallpaper are also committed red. If the live theme differs from
-the repo state, `git status` will show a diff after toggling — that's expected.
+into `common/` kitty/rofi/waybar/tmux; yellow is the live theme as of commit
+time). The `sigint/` hyprland borders and hyprpaper wallpaper may also be
+committed in a themed state. If the live theme differs from the repo state,
+`git status` will show a diff after toggling — that's expected.
+
+To add a theme: append one matching value (indexed identically in every
+array) to each color palette in `toggle-theme.sh`, add it to `THEMES` and
+`IDX`, and drop a matching `<name>.jpg` into
+`common/.config/hypr/wallpapers/`.
 
 ## Pulling across hosts
 
