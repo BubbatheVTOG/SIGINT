@@ -1,9 +1,9 @@
 * {
     background: #000000;
-    foreground: #ef596f;
-    selected-background: #ef596f33;
-    selected-foreground: #ef596f;
-    border-color: #ef596f;
+    foreground: #D7DAE0;
+    selected-background: #D7DAE033;
+    selected-foreground: #D7DAE0;
+    border-color: #D7DAE0;
     
     background-color: transparent;
     text-color: @foreground;
