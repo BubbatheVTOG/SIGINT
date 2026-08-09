@@ -83,8 +83,8 @@ hl.config({
         -- NOTE: theme toggle (SUPER+SHIFT+R) cycles 5 themes via array-driven sed.
         -- See common/.local/bin/toggle-theme.sh for the color palette.
         col = {
-            active_border   = { colors = { "rgba(ef596fee)", "rgba(d8985fee)" }, angle = 45 },
-            inactive_border = "rgba(c24038EE)",
+            active_border   = { colors = { "rgba(33ccffee)", "rgba(00ff99ee)" }, angle = 45 },
+            inactive_border = "rgba(00FFFFEE)",
         },
 
         resize_on_border = false,
