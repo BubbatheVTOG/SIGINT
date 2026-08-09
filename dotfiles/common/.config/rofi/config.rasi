@@ -4,4 +4,4 @@ configuration {
   font: "JetBrains Mono 12";
 }
 
-@theme "~/.config/rofi/themes/black-neon.rasi"
+@theme "~/.config/rofi/themes/theme.rasi"
