@@ -38,7 +38,7 @@ hl.on("hyprland.start", function ()
     hl.exec_cmd("hyprpaper")
     hl.exec_cmd("hypridle")
     hl.exec_cmd("dunst")
-    hl.exec_cmd("/home/bubba/.local/bin/nerd-dictation begin --cookie=/tmp/nerd-dictation-cookie --simulate-input-tool=WTYPE --suspend-on-start --pulse-device-name=alsa_input.platform-sound.HiFi__Headset__source")
+    hl.exec_cmd("systemctl --user start xdg-desktop-portal.service")
     -- Bootstrap theme palette files on first boot (no-op if already present)
     hl.exec_cmd("[ -f ~/.config/theme/kitty.conf ] || /home/bubba/.local/bin/toggle-theme.sh --init")
 end)
@@ -249,9 +249,8 @@ hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = tr
 hl.bind("XF86AudioPlay",  hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
 hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("playerctl previous"),   { locked = true })
 
--- Nerd dictation two-key push-to-talk: SUPER+N = begin, SUPER+M = end
-hl.bind("SUPER + N", hl.dsp.exec_cmd("/home/bubba/.local/bin/nerd-dictation begin --cookie=/tmp/nerd-dictation-cookie"), { locked = true })
-hl.bind("SUPER + M", hl.dsp.exec_cmd("/home/bubba/.local/bin/nerd-dictation end --cookie=/tmp/nerd-dictation-cookie"),   { locked = true })
+-- Speech-to-text (nerd-dictation): SUPER+M toggles recording start/stop
+hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("/home/bubba/.local/bin/nerd-dict-toggle.sh"), { locked = true })
 
 ----------------------
 ---- WINDOW RULES ----

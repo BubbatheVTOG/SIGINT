@@ -1,0 +1,17 @@
+[Unit]
+Description=Activate graphical-session.target for the Hyprland user session
+# Hyprland is launched via greetd -> start-hyprland (a compiled binary) which
+# never activates graphical-session.target (it is RefuseManualStart=yes, so
+# manual starts are refused). Dependency-driven activation is allowed, so this
+# oneshot unit pulls the target in. This satisfies the portal service's
+# Requisite=graphical-session.target and any other session-scoped units.
+Wants=graphical-session.target
+Before=graphical-session.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/true
+
+[Install]
+WantedBy=default.target
