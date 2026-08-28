@@ -3631,6 +3631,9 @@ unfunction grml_status_feature
 
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 
+# opencode
+alias o='opencode'
+
 # bun completions
 [ -s "/home/bubba/.bun/_bun" ] && source "/home/bubba/.bun/_bun"
 

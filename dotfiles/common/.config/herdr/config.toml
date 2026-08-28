@@ -1,0 +1,13 @@
+onboarding = false
+[ui.sound]
+enabled = false
+
+[ui.toast]
+delivery = "system"
+
+[theme]
+name = "terminal"
+auto_switch = false
+
+[experimental]
+kitty_graphics = true

@@ -49,6 +49,22 @@ sudo stow -R -t / system-matt
 
 Requires packages: `greetd greetd-tuigreet` (then `systemctl enable greetd`).
 
+## CLI Toolkit
+
+`common/.zshrc.local` wires up modern CLI tools (starship, zoxide, atuin, fzf,
+eza, bat, fd, duf, procs, direnv, herdr completions) and `common/AGENTS.md`
+(stowed to `~/AGENTS.md`) tells agents to prefer them over GNU defaults.
+
+Install everything on either host:
+
+```bash
+cd ~/git/SIGINT/dotfiles && ./install-cli-tools.sh
+```
+
+Package names differ per distro (`fd-find`/`fd`, `gh`/`github-cli`, …) — the
+script maps them. Every init line and alias in `.zshrc.local` is
+existence-guarded, so hosts missing a tool still boot clean.
+
 ## Theme Toggle
 
 `SUPER + SHIFT + R` cycles through teal, red, green, yellow, orange, purple,
