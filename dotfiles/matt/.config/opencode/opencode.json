@@ -1,5 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  "instructions": ["/home/bubba/AGENTS.md"],
   "provider": {
     "llamacpp": {
       "name": "(local)",
