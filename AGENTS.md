@@ -131,6 +131,11 @@ diffs should be only live theme state.
 - **sigint**: greeter user is `greetd`; Hyprland launches via
   `start-hyprland` (Asahi GPU wrapper, not the bare `Hyprland` binary).
   Single monitor `eDP-1`. Has lid/battery handlers in hyprland.lua.
+  Screen idle-dim is handled by `screen-dim.sh` / `screen-restore.sh`
+  (`sigint/.local/bin/`), invoked from `hypridle.conf` — dims gradually
+  to 10% over 0.8s, skips if already ≤10%, restores instantly on resume.
+  Keyboard backlight auto-dim is a root systemd service
+  (`kbd-backlight-daemon.service`, stowed via `system-sigint`).
 - **matt**: greeter user is `greeter`; Hyprland launches via
   `start-hyprland` (Hyprland recommends the wrapper over the bare binary).
   Three monitors DP-4/DP-5/DP-6 with rotations. GPU passthrough.
