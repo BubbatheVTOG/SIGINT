@@ -27,6 +27,25 @@ aborts. Back it up (`cp -a file file.bak`) and `rm` it, then re-run stow so
 the managed symlink can take over. This is expected for `/etc/greetd/config.toml`
 and `~/.config/btop/btop.conf` on first stow.
 
+**SELinux (sigint only):** Fedora's SELinux blocks systemd (`init_t`) from
+reading unit files and executables that symlink into `/home`, because the
+source files inherit `user_home_t` context. This affects any `system-sigint`
+unit file under `/etc/systemd/system/` or script under `/usr/local/bin/`
+that stow symlinks back into the repo. After stowing, apply persistent
+labels (survive relabels) with `semanage fcontext` + `restorecon`:
+
+```bash
+sudo semanage fcontext -a -t systemd_unit_file_t \
+  "/home/bubba/git/SIGINT/dotfiles/system-sigint/etc/systemd/system/<unit>\.service"
+sudo semanage fcontext -a -t bin_t \
+  "/home/bubba/git/SIGINT/dotfiles/system-sigint/usr/local/bin/<script>\.py"
+sudo restorecon -rv /etc/systemd/system/<unit>.service /usr/local/bin/<script>.py
+sudo systemctl daemon-reload
+sudo systemctl enable --now <unit>.service
+```
+
+matt (Arch) has no SELinux — skip this there.
+
 ## The common/ rule (critical)
 
 `common/` is stowed on **both** hosts — Arch x86_64 and Fedora Asahi ARM,

@@ -49,6 +49,27 @@ sudo stow -R -t / system-matt
 
 Requires packages: `greetd greetd-tuigreet` (then `systemctl enable greetd`).
 
+### SELinux labels (sigint only)
+
+Fedora's SELinux blocks systemd (`init_t`) from reading unit files and
+executables that symlink into `/home` — they inherit `user_home_t`, which
+systemd can't read or execute. This affects any `system-sigint` file stowed
+to `/etc/systemd/system/` or `/usr/local/bin/`. After stowing, apply
+persistent labels (survive relabels) with `semanage fcontext` +
+`restorecon`:
+
+```bash
+sudo semanage fcontext -a -t systemd_unit_file_t \
+  "/home/bubba/git/SIGINT/dotfiles/system-sigint/etc/systemd/system/<unit>\.service"
+sudo semanage fcontext -a -t bin_t \
+  "/home/bubba/git/SIGINT/dotfiles/system-sigint/usr/local/bin/<script>\.py"
+sudo restorecon -rv /etc/systemd/system/<unit>.service /usr/local/bin/<script>.py
+sudo systemctl daemon-reload
+sudo systemctl enable --now <unit>.service
+```
+
+matt (Arch) has no SELinux — skip this there.
+
 ## CLI Toolkit
 
 `common/.zshrc.local` wires up modern CLI tools (starship, zoxide, atuin, fzf,
