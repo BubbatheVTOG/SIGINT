@@ -1,7 +1,8 @@
 # AGENTS.md
 
-GNU stow dotfiles repo for two Hyprland hosts. No build system, no tests —
-edits land directly in live configs via symlinks. Read `README.md` first.
+This repo holds GNU stow dotfiles for two Hyprland hosts. It has no build
+system or tests. Edits go directly into live configs through symlinks. Read
+`README.md` first.
 
 ## Hosts
 
@@ -17,22 +18,22 @@ edits land directly in live configs via symlinks. Read `README.md` first.
 stow -R -t ~ common sigint      # on sigint
 stow -R -t ~ common matt        # on matt
 
-# system-wide (/etc) — needs sudo, clears a pre-existing real file first
+# system-wide (/etc) — needs sudo
 sudo stow -R -t / system-sigint # on sigint
 sudo stow -R -t / system-matt   # on matt
 ```
 
-**Stow conflicts:** if the target path is a real file (not a symlink), stow
-aborts. Back it up (`cp -a file file.bak`) and `rm` it, then re-run stow so
-the managed symlink can take over. This is expected for `/etc/greetd/config.toml`
-and `~/.config/btop/btop.conf` on first stow.
+**Stow conflicts.** If the target path is a real file, stow stops. Copy the
+file (`cp -a file file.bak`), remove it (`rm file`), and run stow again. This
+occurs for `/etc/greetd/config.toml` and `~/.config/btop/btop.conf` on the
+first stow.
 
-**SELinux (sigint only):** Fedora's SELinux blocks systemd (`init_t`) from
-reading unit files and executables that symlink into `/home`, because the
-source files inherit `user_home_t` context. This affects any `system-sigint`
-unit file under `/etc/systemd/system/` or script under `/usr/local/bin/`
-that stow symlinks back into the repo. After stowing, apply persistent
-labels (survive relabels) with `semanage fcontext` + `restorecon`:
+**SELinux (sigint only).** Fedora SELinux does not let systemd read unit files
+and executables that symlink into `/home`. The source files get the
+`user_home_t` context. Systemd cannot read or execute files with this context.
+This affects any `system-sigint` unit file under `/etc/systemd/system/` or
+script under `/usr/local/bin/`. After you stow, apply persistent labels with
+`semanage fcontext` and `restorecon`:
 
 ```bash
 sudo semanage fcontext -a -t systemd_unit_file_t \
@@ -44,33 +45,36 @@ sudo systemctl daemon-reload
 sudo systemctl enable --now <unit>.service
 ```
 
-matt (Arch) has no SELinux — skip this there.
+matt (Arch) has no SELinux. Skip this step on matt.
 
 ## The common/ rule (critical)
 
-`common/` is stowed on **both** hosts — Arch x86_64 and Fedora Asahi ARM,
-different OSes. Anything in `common/` must be either:
+You stow `common/` on **both** hosts — Arch x86_64 and Fedora Asahi ARM.
+These hosts run different operating systems. Each item in `common/` must be
+either:
 
 1. byte-identical on both hosts, or
-2. **guarded** — e.g. `[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"`,
+2. **guarded** — for example, `[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"`,
    or a `case "$(hostname)"` branch.
 
-Host-divergent values (usernames, binary paths, hardware quirks) go in the
-host package (`sigint/` or `matt/`), never in `common/`. Violations break
-the other host silently. Past breakage: unguarded `. "$HOME/.cargo/env"`
-warned on every zsh startup on sigint; a shared `system/` greetd config used
-Arch's `greeter` user + bare `Hyprland` (neither exists/works on Fedora Asahi,
-which needs `greetd` + `start-hyprland`).
+Put host-specific values (usernames, binary paths, hardware details) in the
+host package (`sigint/` or `matt/`), not in `common/`. Violations break the
+other host without a warning.
 
-## Theme state is generated, not committed
+Past breakage: an unguarded `. "$HOME/.cargo/env"` printed a warning on every
+zsh startup on sigint. A shared `system/` greetd config used the Arch
+`greeter` user and the bare `Hyprland` binary. Neither exists on Fedora Asahi,
+which uses `greetd` and `start-hyprland`.
 
-`toggle-theme.sh` (SUPER+SHIFT+R) generates 8 palette files into
-`~/.config/theme/` (a gitignored real directory — not stowed, not committed).
-It cycles 7 themes: teal, red, green, yellow, orange, purple, white. State
-lives in `~/.cache/current_theme` (one of those seven names).
+## Theme state: generated, not committed
 
-Committed configs contain **no color values** — only static structure + one
-include line each that pulls in a palette file from `~/.config/theme/`:
+`toggle-theme.sh` (SUPER+SHIFT+R) generates 8 palette files in
+`~/.config/theme/`. Git ignores this directory. You do not stow or commit it.
+The script cycles 7 themes: teal, red, green, yellow, orange, purple, white.
+The current theme name is in `~/.cache/current_theme`.
+
+The committed configs contain **no color values**. Each config has one include
+line that loads a palette file from `~/.config/theme/`:
 
 | tool | include line in committed config | palette file |
 |---|---|---|
@@ -83,25 +87,26 @@ include line each that pulls in a palette file from `~/.config/theme/`:
 | hyprpaper | `source = ~/.config/theme/hyprpaper.conf` | `$wallpaper` variable |
 | fastfetch | sources `~/.config/theme/fastfetch-palette.sh` from `.zshrc.local` | `FF_KEYS`/`FF_TITLE`/`FF_SEP`/`FF_LOGO` |
 
-`--init` flag: applies the current theme without cycling (bootstrap on
-first boot). Hyprland autostart runs
-`[ -f ~/.config/theme/kitty.conf ] || toggle-theme.sh --init` so palette
-files are generated automatically on a fresh install.
+The `--init` flag applies the current theme. It does not cycle the themes.
+Use it on the first boot to set the initial theme. Hyprland autostart runs
+`[ -f ~/.config/theme/kitty.conf ] || toggle-theme.sh --init`. This generates
+the palette files automatically on a fresh install.
 
-**`git status` is always clean after toggling** — color values never touch
-the committed tree. No stash/pull/pop needed across hosts.
+`git status` is always clean after a theme toggle. Color values never touch
+the committed tree. You do not need to stash, pull, or pop across hosts.
 
-Why `dofile` (not `require`) in hyprland.lua: `require` caches in
-`package.loaded` across `hyprctl reload`, leaving stale colors after a
-theme switch; `dofile` re-reads every reload. The `pcall` guard handles
-the missing-file case on first boot (falls back to inline teal defaults).
+Use `dofile` (not `require`) in hyprland.lua. The `require` function caches
+modules in `package.loaded` across `hyprctl reload`, which leaves stale colors
+after a theme switch. The `dofile` function re-reads the file on every reload.
+The `pcall` guard handles the case where the file does not exist on first
+boot. It falls back to inline teal defaults.
 
-To add a theme: append one matching value (indexed identically in every
-array) to each color palette in `toggle-theme.sh`, add it to `THEMES` and
-`IDX`, and drop a matching `<name>.jpg` into
+To add a theme: append one value to each color palette in
+`toggle-theme.sh`. Index the value identically in every array. Add the theme
+name to `THEMES` and `IDX`. Put a matching `<name>.jpg` into
 `common/.config/hypr/wallpapers/`.
 
-## Pulling across hosts
+## Pull across hosts
 
 ```bash
 cd ~/git/SIGINT && git stash && git pull --ff-only && git stash pop
@@ -109,50 +114,51 @@ cd dotfiles && stow -R -t ~ common <host>
 # then sudo stow for the system package if it changed
 ```
 
-After pull, always re-run the home stow to refresh symlinks (files may have
-been added/removed/renamed in a package). Check `git status` — remaining
-diffs should be only live theme state.
+After a pull, always run the home stow command again to refresh the symlinks.
+A pull may add, remove, or rename files in a package. Check `git status`. The
+remaining diffs are live theme state only.
 
-## Config format quirks
+## Config format notes
 
-- **Hyprland config is Lua** (`hyprland.lua`), not `.conf`. Uses a custom
-  `hl.` DSL. Validate syntax: `luajit -e 'assert(loadfile("path"))'`.
-- **waybar config is JSONC** (`config.jsonc`) — `//` comments and trailing
+- **Hyprland config is Lua** (`hyprland.lua`), not `.conf`. It uses a custom
+  `hl.` DSL. Validate the syntax: `luajit -e 'assert(loadfile("path"))'`.
+- **waybar config is JSONC** (`config.jsonc`). `//` comments and trailing
   commas are valid for waybar but break strict `json.load`. Strip comments
-  before validating with Python.
-- **greetd config is TOML** — validate with `python3 -c "import tomllib; ..."`.
-- **grml zshrc is vendored** in `common/.zshrc` (1400+ lines, don't edit).
-  Personal zsh additions go in `common/.zshrc.local`, which grml sources via
-  `zrclocal()`. A double-source guard prevents fastfetch/PATH duplication
-  when both `/etc/zsh/zshrc` and `~/.zshrc` are grml.
+  before you validate with Python.
+- **greetd config is TOML**. Validate it:
+  `python3 -c "import tomllib; ..."`.
+- **grml zshrc is vendored** in `common/.zshrc` (1400+ lines). Do not edit it.
+  Put personal zsh additions in `common/.zshrc.local`. grml sources this file
+  through `zrclocal()`. A double-source guard prevents fastfetch and PATH
+  duplication when both `/etc/zsh/zshrc` and `~/.zshrc` are grml.
+- **hypridle is managed by Hyprland autostart**, not systemd. Hyprland starts
+  hypridle through `pidof hypridle || hypridle` in `hyprland.lua`. Do not start
+  or enable the systemd user service (`systemctl --user start hypridle`) —
+  a second instance causes conflicting idle timers and screen blackouts. The
+  `pidof` guard prevents duplicates on `hyprctl reload`.
 
-## Per-host facts that matter
+## Per-host facts
 
-- **sigint**: greeter user is `greetd`; Hyprland launches via
-  `start-hyprland` (Asahi GPU wrapper, not the bare `Hyprland` binary).
-  Single monitor `eDP-1`. Has lid/battery handlers in hyprland.lua.
-  Screen idle-dim is handled by `screen-dim.sh` / `screen-restore.sh`
-  (`sigint/.local/bin/`), invoked from `hypridle.conf` — dims gradually
-  to 10% over 0.8s, skips if already ≤10%, restores instantly on resume.
-  Keyboard backlight auto-dim is a root systemd service
-  (`kbd-backlight-daemon.service`, stowed via `system-sigint`).
-- **matt**: greeter user is `greeter`; Hyprland launches via
-  `start-hyprland` (Hyprland recommends the wrapper over the bare binary).
-  Three monitors DP-4/DP-5/DP-6 with rotations. GPU passthrough.
-  `OPENCODE_BIN_PATH` workaround for a Bun crash on Ryzen 5800X3D
-  (matt-only, set conditionally in `common/.zshrc.local`).
+- **sigint**: The greeter user is `greetd`. Hyprland starts through
+  `start-hyprland` (the Asahi GPU wrapper, not the bare `Hyprland` binary).
+  Single monitor: `eDP-1`. Lid and battery handlers are in hyprland.lua.
+- **matt**: The greeter user is `greeter`. Hyprland starts through
+  `start-hyprland`. Three monitors: DP-4, DP-5, DP-6, each with a rotation.
+  GPU passthrough. `OPENCODE_BIN_PATH` works around a Bun crash on the
+  Ryzen 5800X3D. `common/.zshrc.local` sets it conditionally.
 
 ## Secrets
 
-`~/.config/secrets` (gitignored) is sourced by the shell. Configs reference
-values via opencode's `{env:VAR_NAME}` substitution. Required:
-`HTB_TOKEN`, `VLLM_API_KEY`. Never commit secrets; never hardcode keys.
+The shell sources `~/.config/secrets` (gitignored). Configs get these values
+through the opencode `{env:VAR_NAME}` substitution. Required variables:
+`HTB_TOKEN`, `VLLM_API_KEY`. Do not commit secrets. Do not hardcode keys.
 
 ## Git
 
-- Default branch: `main` (not `master`). No `master` branch exists.
-- `.gitconfig` requires `git-lfs` (LFS filter is `required = true`).
+- Default branch: `main`. No `master` branch exists.
+- `.gitconfig` requires `git-lfs` (the LFS filter is `required = true`).
 - Gitignored: `.config/secrets`, `bun.lock`, `.zcompdump*`, `.zdirs`, `*.bak`.
 - No CI, no pre-commit hooks, no test suite. Verification is manual: check
-  symlinks resolve (`readlink -f`, `find ~ -type l ! -exec test -e {} \;`),
-  validate config syntax, run `zsh -c true` to check shell startup is clean.
+  that symlinks resolve (`readlink -f`,
+  `find ~ -type l ! -exec test -e {} \;`), validate config syntax, run
+  `zsh -c true` to confirm the shell starts clean.
