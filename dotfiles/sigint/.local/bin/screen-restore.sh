@@ -7,6 +7,11 @@ CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}"
 STATE_FILE="$CACHE_DIR/screen-dim-state"
 PID_FILE="$CACHE_DIR/screen-dim.pid"
 
+mkdir -p "$CACHE_DIR" 2>/dev/null || {
+    echo "screen-restore: cannot create $CACHE_DIR" >&2
+    exit 1
+}
+
 # Kill a dim still in progress
 if [ -f "$PID_FILE" ]; then
     kill "$(cat "$PID_FILE")" 2>/dev/null
