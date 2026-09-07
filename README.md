@@ -102,6 +102,15 @@ Each theme has a wallpaper in `common/.config/hypr/wallpapers/` (`teal.jpg`,
 
 ### sigint (Asahi MacBook Air)
 
+- **Speaker safety (critical)**: The `asahi-audio` package (includes
+  `speakersafetyd`) **must** be installed and running on all Apple Silicon
+  (M-series) Mac hardware. Without it, the speaker amplifiers can be driven
+  past safe thermal limits and cause **permanent physical damage** to the
+  speakers. The daemon monitors voice-coil temperature and reduces output
+  before damage occurs. It also provides kernel-side interlocks that limit
+  volume if the daemon is not running. Install it:
+  `sudo dnf install asahi-audio` (included in `install-cli-tools.sh`).
+  Verify it is active: `systemctl status speakersafetyd`.
 - **Screen auto-dim**: `screen-dim.sh` and `screen-restore.sh`
   (`sigint/.local/bin/`) run from `hypridle.conf`. After 2.5 minutes of
   inactivity, the screen dims to 10% over 0.8 seconds. If the brightness is

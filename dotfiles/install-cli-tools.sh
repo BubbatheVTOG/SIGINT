@@ -8,7 +8,7 @@ set -eu
 
 # intentional word splitting on the package lists
 # shellcheck disable=SC2086
-FEDORA_PKGS="fd-find atuin git-delta tldr gh direnv just hyperfine duf procs fzf ripgrep bat eza zoxide starship btop ncdu jq"
+FEDORA_PKGS="fd-find atuin git-delta tldr gh direnv just hyperfine duf procs fzf ripgrep bat eza zoxide starship btop ncdu jq asahi-audio"
 # shellcheck disable=SC2086
 ARCH_PKGS="fd atuin git-delta tldr github-cli direnv just hyperfine duf procs fzf ripgrep bat eza zoxide starship btop ncdu jq"
 
