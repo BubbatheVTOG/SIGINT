@@ -1,0 +1,54 @@
+# Local override for the "pi" agent detection manifest.
+# Shadows the remote manifest (herdr.dev/agent-detection) until `herdr update`
+# ships a fixed upstream version. Reload with: herdr agent-manifests reload
+# (socket API: server.reload_agent_manifests).
+
+id = "pi"
+version = "2026.09.09.1"
+min_engine_version = 1
+updated_at = "2026-09-09T00:00:00Z"
+aliases = ["herdr:pi"]
+
+# The remote manifest's only rule matches the literal string "Working..."
+# anywhere in the recent buffer (whole_recent). That matches conversation text
+# and file contents, so the pane is misclassified as working while idle.
+# This local manifest replaces it with live-state signals only.
+
+# --- BLOCKED: @nguyenquangthai/pi-ask question dialog ----------------------
+# The dialog footer always renders this keymap hint line (single/multi select
+# and review tabs); it is the last line of the dialog, close to the buffer
+# bottom. Both fragments must be present (AND) to avoid false positives.
+[[rules]]
+id = "pi_ask_dialog_blocked"
+state = "blocked"
+priority = 950
+region = "bottom_non_empty_lines(25)"
+visible_blocker = true
+all = [
+  { contains = ["Esc dismiss"] },
+  { contains = ["←→/Tab tabs"] },
+]
+
+# --- WORKING: live pi TUI footer spinner line ------------------------------
+# While a turn is active the footer renders a braille spinner + "Working"
+# (e.g. "⠼ Working"). Scope to the live bottom of the buffer and anchor to
+# the spinner character so conversation text can never match.
+[[rules]]
+id = "live_turn_working"
+state = "working"
+priority = 900
+region = "bottom_non_empty_lines(15)"
+visible_working = true
+line_regex = ['^[ ]?[\x{2800}-\x{28FF}]\s+Working(?:\s|·|$)']
+
+# --- IDLE fallback: pi always sets a non-empty window title ----------------
+# pi's TUI sets the terminal title to "π - <cwd>" (or "π - <session> - <cwd>")
+# at all times. If no higher-priority signal matches, treat a titled pane as
+# idle. Same shape as codex's osc_title_idle.
+[[rules]]
+id = "osc_title_idle"
+state = "idle"
+priority = 100
+region = "osc_title"
+visible_idle = true
+regex = ['^π -']
