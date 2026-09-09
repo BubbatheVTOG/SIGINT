@@ -1,9 +1,9 @@
 onboarding = false
 [ui.sound]
-enabled = false
+enabled = true
 
 [ui.toast]
-delivery = "system"
+delivery = "herdr"
 
 [theme]
 name = "terminal"
