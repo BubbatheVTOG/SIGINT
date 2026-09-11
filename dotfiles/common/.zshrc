@@ -3633,6 +3633,8 @@ unfunction grml_status_feature
 
 # opencode
 alias o='opencode'
+alias p='pi'
+alias h='herdr'
 
 # bun completions
 [ -s "/home/bubba/.bun/_bun" ] && source "/home/bubba/.bun/_bun"
