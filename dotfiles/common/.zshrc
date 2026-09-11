@@ -3642,3 +3642,6 @@ alias h='herdr'
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+# mise (version manager: elixir, erlang, bun for lmfarm)
+eval "$(~/.local/bin/mise activate zsh)"
