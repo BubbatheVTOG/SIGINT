@@ -25,6 +25,7 @@
       "models": {
         "bubba": {
           "name": "bubba",
+          "reasoning": true,
           "limit": {
             "context": 256000,
             "output": 8192
@@ -36,6 +37,10 @@
             "min_p": 0.0,
             "presence_penalty": 0.0,
             "repetition_penalty": 1.0
+          },
+          "variants": {
+            "high": { "disabled": true },
+            "xhigh": { "reasoningEffort": "xhigh" }
           }
         }
       }
@@ -50,6 +55,7 @@
         "bubba (local)": {
           "name": "bubba (local)",
           "tool_call": true,
+          "reasoning": true,
           "limit": {
             "context": 128000,
             "output": 2048
@@ -61,6 +67,10 @@
             "min_p": 0.0,
             "presence_penalty": 0.0,
             "repetition_penalty": 1.0
+          },
+          "variants": {
+            "high": { "disabled": true },
+            "xhigh": { "reasoningEffort": "xhigh" }
           }
         }
       }
