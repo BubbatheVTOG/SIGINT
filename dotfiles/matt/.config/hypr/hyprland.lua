@@ -1,6 +1,6 @@
 -- Hyprland Lua Configuration - Host: matt (desktop)
 -- Adapted from sigint's confirmed-working config + Hyprland 0.56 hl.* API docs.
--- Hardware: 3 monitors (DP-4 left/rotated, DP-5 center, DP-6 right/rotated).
+-- Hardware: 3 monitors (DP-1 left/rotated, DP-2 center, DP-3 right/rotated).
 -- Differences from sigint: no lid handling, no battery/brightness keys,
 -- voxtype for speech-to-text (not nerd-dictation), SUPER+SHIFT+R theme toggle.
 
@@ -16,12 +16,12 @@ local C = select(2, pcall(dofile, os.getenv("HOME") .. "/.config/theme/hyprland.
 ---- MONITORS ----
 ------------------
 -- From `hyprctl monitors` on matt (2026-08-08):
---   DP-4: HP E243m   1920x1080@60  at 0x0     transform 1 (90 deg)
---   DP-5: Acer XB270HU 2560x1440@144 at 1080x0  (main)
---   DP-6: preferred  at 3640x0  transform 3 (270 deg)
+--   DP-1: HP E243m   1920x1080@60  at 0x0     transform 1 (90 deg)
+--   DP-2: Acer XB270HU 2560x1440@144 at 1080x0  (main)
+--   DP-3: preferred  at 3640x0  transform 3 (270 deg)
 
 hl.monitor({
-    output    = "DP-4",
+    output    = "DP-1",
     mode      = "1920x1080@60",
     position  = "0x0",
     scale     = 1.0,
@@ -29,14 +29,14 @@ hl.monitor({
 })
 
 hl.monitor({
-    output   = "DP-5",
+    output   = "DP-2",
     mode     = "2560x1440@144",
     position = "1080x0",
     scale    = 1.0,
 })
 
 hl.monitor({
-    output    = "DP-6",
+    output    = "DP-3",
     mode      = "preferred",
     position  = "3640x0",
     scale     = 1.0,

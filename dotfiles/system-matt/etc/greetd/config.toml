@@ -4,7 +4,8 @@
 #
 # NOTE: vt = 2 keeps the greeter on a clean terminal away from systemd boot
 # messages (which go to vt 1).  --width/--container-padding/--prompt-padding
-# tuned for 1440p main monitor (DP-5) so the login box is centered.
+# tuned for 1440p main monitor (DP-2 as of 2026-09-14; the kernel renumbered
+# the outputs, it was DP-5 before) so the login box is centered.
 
 [terminal]
 # Use vt = 2 to avoid kernel/systemd boot messages on vt 1.
