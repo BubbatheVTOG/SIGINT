@@ -120,8 +120,8 @@ hl.config({
 
         blur = {
             enabled           = true,
-            size              = 3,
-            passes            = 1,
+            size              = 12,
+            passes            = 2,
             vibrancy          = 0.1696,
             new_optimizations = true,
         },
@@ -162,6 +162,11 @@ hl.config({
 --------------------
 ---- ANIMATIONS ----
 --------------------
+
+-- Note (2026-07): per-window blur *strength* is not exposed in the 0.56 Lua API
+-- (only no_blur). The new blur variants on git bring per-window blur back.
+-- Exempt an app from the global blur when needed, e.g.:
+-- hl.window_rule({ name = "no-blur-mpv", match = { class = "mpv" }, no_blur = true })
 
 hl.curve("easeOutQuint",   { type = "bezier", points = { { 0.23, 1 },    { 0.32, 1 } } })
 hl.curve("easeInOutCubic", { type = "bezier", points = { { 0.65, 0.05 }, { 0.36, 1 } } })

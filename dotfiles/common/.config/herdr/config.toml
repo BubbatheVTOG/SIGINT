@@ -1,6 +1,6 @@
 onboarding = false
 [ui.sound]
-enabled = true
+enabled = false
 
 [ui.toast]
 delivery = "herdr"
@@ -11,3 +11,6 @@ auto_switch = false
 
 [experimental]
 kitty_graphics = true
+
+[ui]
+status_indicators = "symbols"
