@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+# Reapply the desktop monitor layout by model and position, not DP-N names.
+# Kernel/driver updates can renumber DisplayPort connectors between boots.
+set -u
+
+log() { printf '[hypr-monitor-guard] %s\n' "$*" >&2; }
+
+wallpaper_path() {
+    sed -n 's/^\$wallpaper[[:space:]]*=[[:space:]]*//p' "$HOME/.config/theme/hyprpaper.conf" \
+        | head -n1
+}
+
+for attempt in {1..15}; do
+    monitors=$(hyprctl -j monitors 2>/dev/null || true)
+    if [ -n "$monitors" ] && printf '%s' "$monitors" | jq -e 'length == 3' >/dev/null 2>&1; then
+        break
+    fi
+    [ "$attempt" -eq 15 ] && { log "timed out waiting for three monitors"; exit 1; }
+    sleep 1
+ done
+
+left=$(printf '%s' "$monitors" | jq -r '[.[] | select(.model == "HP E243m") | select(.x == 0) | .name][0] // empty')
+right=$(printf '%s' "$monitors" | jq -r '[.[] | select(.model == "HP E243m") | select(.x > 0) | .name][0] // empty')
+center=$(printf '%s' "$monitors" | jq -r '[.[] | select(.model == "XB270HU") | .name][0] // empty')
+
+if [ -z "$left" ] || [ -z "$right" ] || [ -z "$center" ]; then
+    log "could not identify left=$left center=$center right=$right"
+    exit 1
+fi
+
+log "mapping left=$left center=$center right=$right"
+hyprctl keyword monitor "$left,1920x1080@60,0x0,1,1" >/dev/null
+hyprctl keyword monitor "$center,2560x1440@144,1080x0,1,0" >/dev/null
+hyprctl keyword monitor "$right,1920x1080@60,3640x0,1,3" >/dev/null
+
+wallpaper=$(wallpaper_path)
+if [ -n "$wallpaper" ] && [ -f "$wallpaper" ]; then
+    for monitor in "$left" "$center" "$right"; do
+        hyprctl hyprpaper wallpaper "$monitor,$wallpaper,cover" >/dev/null 2>&1 || \
+            log "could not apply wallpaper to $monitor"
+    done
+else
+    log "wallpaper path unavailable: $wallpaper"
+fi
+
+log "layout applied"

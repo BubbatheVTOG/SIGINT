@@ -60,6 +60,8 @@ hl.on("hyprland.start", function ()
     hl.exec_cmd("nm-applet")
     hl.exec_cmd("waybar")
     hl.exec_cmd("hyprpaper")
+    -- Re-detect outputs after DRM/kernel renumbering and repair names-dependent settings.
+    hl.exec_cmd("/home/bubba/.local/bin/hypr-monitor-guard")
     hl.exec_cmd("hypridle")
     hl.exec_cmd("dunst")
     hl.exec_cmd("voxtype daemon")
