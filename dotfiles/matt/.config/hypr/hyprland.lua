@@ -16,12 +16,12 @@ local C = select(2, pcall(dofile, os.getenv("HOME") .. "/.config/theme/hyprland.
 ---- MONITORS ----
 ------------------
 -- From `hyprctl monitors` on matt (2026-08-08):
---   DP-1: HP E243m   1920x1080@60  at 0x0     transform 1 (90 deg)
---   DP-2: Acer XB270HU 2560x1440@144 at 1080x0  (main)
---   DP-3: preferred  at 3640x0  transform 3 (270 deg)
+--   DP-4: HP E243m   1920x1080@60  at 0x0     transform 1 (90 deg)
+--   DP-5: Acer XB270HU 2560x1440@144 at 1080x0  (main)
+--   DP-6: HP E243m   1920x1080@60  at 3640x0  transform 3 (270 deg)
 
 hl.monitor({
-    output    = "DP-1",
+    output    = "DP-4",
     mode      = "1920x1080@60",
     position  = "0x0",
     scale     = 1.0,
@@ -29,14 +29,14 @@ hl.monitor({
 })
 
 hl.monitor({
-    output   = "DP-2",
+    output   = "DP-5",
     mode     = "2560x1440@144",
     position = "1080x0",
     scale    = 1.0,
 })
 
 hl.monitor({
-    output    = "DP-3",
+    output    = "DP-6",
     mode      = "preferred",
     position  = "3640x0",
     scale     = 1.0,
@@ -48,7 +48,6 @@ hl.monitor({
 ---------------------
 
 local terminal    = "kitty"
-local fileManager = "dolphin"
 local menu        = "rofi -show drun"
 local browser     = "firefox"
 
