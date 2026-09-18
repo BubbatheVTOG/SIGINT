@@ -23,6 +23,16 @@ else
     exit 1
 fi
 
+# hunk (hunk.dev) — terminal diff viewer for agent-authored changesets. Not in a
+# package manager; the official script installs a checksum-verified standalone
+# binary into ~/.hunk/bin and manages its own PATH entry in the shell rc.
+if command -v hunk >/dev/null 2>&1 || [ -x "$HOME/.hunk/bin/hunk" ]; then
+    echo "==> hunk: already installed, skipping"
+else
+    echo "==> hunk: install script (telemetry off)"
+    DO_NOT_TRACK=1 curl -fsSL https://hunk.dev/install.sh | sh
+fi
+
 echo "==> done. Shell init lives in dotfiles/common/.zshrc.local (guarded, so"
 echo "    hosts missing a tool still boot clean). Restart the shell to pick up"
 echo "    starship/zoxide/atuin/direnv/fzf/herdr integrations."
