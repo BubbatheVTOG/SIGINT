@@ -33,6 +33,17 @@ else
     DO_NOT_TRACK=1 curl -fsSL https://hunk.dev/install.sh | sh
 fi
 
+# Surface the bundled hunk-review skill to pi. Symlink (not a copy) so
+# `hunk update` stays authoritative; refuse if a real dir is already there
+# (two copies would conflict, same class of bug as the frozen agent-voice copy).
+if [ -d "$HOME/.pi/agent/skills/hunk-review" ] && [ ! -L "$HOME/.pi/agent/skills/hunk-review" ]; then
+    echo "==> hunk skill: real directory at ~/.pi/agent/skills/hunk-review; not touching" >&2
+elif [ ! -e "$HOME/.pi/agent/skills/hunk-review" ]; then
+    mkdir -p "$HOME/.pi/agent/skills"
+    ln -s "$HOME/.hunk/skills/hunk-review" "$HOME/.pi/agent/skills/hunk-review"
+    echo "==> hunk skill: linked ~/.hunk/skills/hunk-review into ~/.pi/agent/skills/"
+fi
+
 echo "==> done. Shell init lives in dotfiles/common/.zshrc.local (guarded, so"
 echo "    hosts missing a tool still boot clean). Restart the shell to pick up"
 echo "    starship/zoxide/atuin/direnv/fzf/herdr integrations."
