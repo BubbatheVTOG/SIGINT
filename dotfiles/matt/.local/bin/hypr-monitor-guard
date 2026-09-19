@@ -3,7 +3,12 @@
 # Kernel/driver updates can renumber DisplayPort connectors between boots.
 set -u
 
-log() { printf '[hypr-monitor-guard] %s\n' "$*" >&2; }
+LOG_FILE="$HOME/.local/state/hypr-monitor-guard.log"
+
+log() {
+    printf '[hypr-monitor-guard] %s\n' "$*" >&2
+    printf '%s [hypr-monitor-guard] %s\n' "$(date -Is)" "$*" >> "$LOG_FILE" 2>/dev/null || true
+}
 
 wallpaper_path() {
     sed -n 's/^\$wallpaper[[:space:]]*=[[:space:]]*//p' "$HOME/.config/theme/hyprpaper.conf" \
@@ -29,9 +34,23 @@ if [ -z "$left" ] || [ -z "$right" ] || [ -z "$center" ]; then
 fi
 
 log "mapping left=$left center=$center right=$right"
-hyprctl keyword monitor "$left,1920x1080@60,0x0,1,1" >/dev/null
-hyprctl keyword monitor "$center,2560x1440@144,1080x0,1,0" >/dev/null
-hyprctl keyword monitor "$right,1920x1080@60,3640x0,1,3" >/dev/null
+
+# NOTE (2026-09-19): `hyprctl keyword monitor ...` is rejected on Hyprland 0.56
+# when the config is lua-based ("keyword can't work with non-legacy parsers. Use
+# eval"), and the old positional arg order (res,pos,transform,scale) no longer
+# matches the parser either. Inject the rule through the lua API instead.
+apply_monitor() {
+    # $1=output $2=mode $3=position $4=transform (0..7)
+    local out
+    out=$(hyprctl eval "hl.monitor({ output = '$1', mode = '$2', position = '$3', scale = 1.0, transform = $4 })" 2>&1) || true
+    if [ "${out:-}" != "ok" ]; then
+        log "apply_monitor $1 failed: ${out:-no output}"
+    fi
+}
+
+apply_monitor "$left"   "1920x1080@60"   "0x0"    1   # 90 deg
+apply_monitor "$center" "2560x1440@144"  "1080x0" 0
+apply_monitor "$right"  "1920x1080@60"   "3640x0" 3   # 270 deg
 
 wallpaper=$(wallpaper_path)
 if [ -n "$wallpaper" ] && [ -f "$wallpaper" ]; then
