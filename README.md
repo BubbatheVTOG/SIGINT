@@ -128,6 +128,8 @@ Each theme has a wallpaper in `common/.config/hypr/wallpapers/` (`teal.jpg`,
 - **Monitor**: The single display is `eDP-1`.
 - **Greeter**: The user is `greetd`. `start-hyprland` (the Asahi GPU wrapper)
   starts Hyprland.
+- **Memory**: 8 GiB zram (`/etc/systemd/zram-generator.conf`) is the primary
+  swap tier, with the 8 GiB swapfile as fallback.
 
 ### matt (Arch desktop)
 
