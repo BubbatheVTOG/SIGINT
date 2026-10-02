@@ -58,8 +58,14 @@ command -v starship >/dev/null 2>&1 && eval "$(starship init zsh)"
 command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init zsh)"
 
 # fzf key bindings (Ctrl-R history search, Ctrl-T file insert, Alt-C cd)
+# zsh 5.9: fzf's option-restore block evals a saved `setopt` dump that now
+# includes `zle`, which errors in non-tty shells (cosmetic; options still
+# restore). Filter that one line; let any other stderr through.
 for _fzf_bind in /usr/share/fzf/shell/key-bindings.zsh /usr/share/fzf/key-bindings.zsh; do
-    [ -f "$_fzf_bind" ] && source "$_fzf_bind" && break
+    if [ -f "$_fzf_bind" ]; then
+        source "$_fzf_bind" 2> >(grep -v 'can.t change option: zle' >&2)
+        break
+    fi
 done
 unset _fzf_bind
 
