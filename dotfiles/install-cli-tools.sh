@@ -18,8 +18,9 @@ ARCH_PKGS="fd atuin git-delta tldr github-cli direnv just hyperfine duf procs fz
 if command -v dnf >/dev/null 2>&1; then
     echo "==> Fedora: dnf install"
     # --skip-unavailable keeps release-to-release package drops (e.g. procs in
-    # Fedora 45) from aborting the whole transaction.
-    sudo dnf install -y --skip-unavailable $FEDORA_PKGS
+    # Fedora 45) from aborting the whole transaction. --skip-broken also covers
+    # vendor-change conflicts such as eza (alternateved COPR vs Fedora).
+    sudo dnf install -y --skip-unavailable --skip-broken $FEDORA_PKGS
 elif command -v pacman >/dev/null 2>&1; then
     echo "==> Arch: pacman install (--needed skips up-to-date packages)"
     sudo pacman -S --needed $ARCH_PKGS
