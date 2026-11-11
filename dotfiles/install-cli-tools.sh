@@ -17,7 +17,9 @@ if command -v dnf >/dev/null 2>&1; then
     sudo dnf install -y $FEDORA_PKGS
 elif command -v pacman >/dev/null 2>&1; then
     echo "==> Arch: pacman install (--needed skips up-to-date packages)"
-    sudo pacman -S --needed $ARCH_PKGS
+    # --noconfirm matches `dnf -y` above; without it the script blocks on the
+    # transaction prompt whenever it runs non-interactively.
+    sudo pacman -S --needed --noconfirm $ARCH_PKGS
 else
     echo "install-cli-tools.sh: no dnf or pacman found; add a mapping for this distro" >&2
     exit 1
@@ -44,6 +46,8 @@ elif [ ! -e "$HOME/.pi/agent/skills/hunk-review" ]; then
     echo "==> hunk skill: linked ~/.hunk/skills/hunk-review into ~/.pi/agent/skills/"
 fi
 
-echo "==> done. Shell init lives in dotfiles/common/.zshrc.local (guarded, so"
+echo "==> done. Editor-side binaries (ctags, maven, gradle, tree-sitter, pynvim)"
+echo "    live in Nvim-Config/install-editor-tools.sh; this script stays shell/CLI."
+echo "    Shell init lives in dotfiles/common/.zshrc.local (guarded, so"
 echo "    hosts missing a tool still boot clean). Restart the shell to pick up"
 echo "    starship/zoxide/atuin/direnv/fzf/herdr integrations."
