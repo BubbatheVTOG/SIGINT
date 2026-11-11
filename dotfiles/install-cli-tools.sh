@@ -8,13 +8,19 @@ set -eu
 
 # intentional word splitting on the package lists
 # shellcheck disable=SC2086
-FEDORA_PKGS="fd-find atuin git-delta tldr gh direnv just hyperfine duf procs fzf ripgrep bat eza zoxide starship btop ncdu jq asahi-audio"
+# NOTE: starship is not packaged in Fedora; it comes from the upstream
+# installer into ~/.local/bin. procs was dropped from Fedora 45 (all arches),
+# so --skip-unavailable below skips it instead of aborting the transaction.
+FEDORA_PKGS="fd-find atuin git-delta tldr gh direnv just hyperfine duf procs fzf ripgrep bat eza zoxide btop ncdu jq asahi-audio"
 # shellcheck disable=SC2086
 ARCH_PKGS="fd atuin git-delta tldr github-cli direnv just hyperfine duf procs fzf ripgrep bat eza zoxide starship btop ncdu jq"
 
 if command -v dnf >/dev/null 2>&1; then
     echo "==> Fedora: dnf install"
-    sudo dnf install -y $FEDORA_PKGS
+    # --skip-unavailable keeps release-to-release package drops (e.g. procs in
+    # Fedora 45) from aborting the whole transaction. --skip-broken also covers
+    # vendor-change conflicts such as eza (alternateved COPR vs Fedora).
+    sudo dnf install -y --skip-unavailable --skip-broken $FEDORA_PKGS
 elif command -v pacman >/dev/null 2>&1; then
     echo "==> Arch: pacman install (--needed skips up-to-date packages)"
     # --noconfirm matches `dnf -y` above; without it the script blocks on the
